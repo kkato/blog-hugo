@@ -7,7 +7,7 @@ draft: false
 以前Kubernetesクラスタを構築するときに、Rocky Linuxでcontainerdをインストールする方法についてあまり情報がなかったので、とても苦労しました。
 なので今回はその時に調べた内容を記事にしてみました。
 
-内容はシンプルで、次のコマンドを実行します。
+次のコマンドでcontainerdをインストールできます。
 
 ```sh
 # yumにCentOS用のdockerリポジトリを追加する
