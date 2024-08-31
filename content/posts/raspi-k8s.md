@@ -7,7 +7,7 @@ draft: false
 最近ラズパイを手に入れたので、kubeadmを使ってk8sクラスタを組んでみたいと思います。
 Control Planeノードx1 Workerノードx3の構成です。
 
-![](/images/raspi/raspi-cluster.jpg)
+![](/images/raspi-k8s/raspi-cluster.jpg)
 
 ## 準備
 
@@ -38,7 +38,7 @@ $ sudo apt install rpi-imager
 ```
 $ rpi-imager
 ```
-![](/images/raspi/raspi-imager.png)
+![](/images/raspi-k8s/raspi-imager.png)
 
 microSDカードを差し込み、ディスプレイ(micro HDMI)とキーボード(USB)を接続し、OSの初期設定を行います。初期ユーザー名とパスワードはubuntuです。パッケージを最新にしておきます。
 ```sh
@@ -71,7 +71,7 @@ $ ip link
 ```
 
 Aterm WG1200HS4というルーターを使っており、[http://aterm.me/](http://aterm.me/)から固定IPを設定できます。ここで先ほど確認したMACアドレスと、固定したいIPアドレスを指定します。その後、ルーターを再起動し、設定が反映されているか確認します。
-![](/images/raspi/router.png)
+![](/images/raspi-k8s/router.png)
 
 手元のPCからきちんと設定されているか確認します。(111~114がラズパイです。)
 ```sh

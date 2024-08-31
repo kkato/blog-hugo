@@ -7,7 +7,7 @@ draft: false
 しばらく放置していたNUC上にk8sをインストールして、おうちクラスタを運用していこうと思います。
 今回はkubeadmを使ってk8sをインストールしようと思います。
 
-![](/images/nuc/nuc.jpg)
+![](/images/nuc-k8s/nuc.jpg)
 
 ## 前提
 
@@ -23,12 +23,10 @@ draft: false
 
 ## kubeadmのインストール
 
-以下の手順を参考にします。（[kubeadm、kubelet、kubectlのインストール](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#kubeadm-kubelet-kubectl%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB)のrepoのbaseurlの記述が古かったので、英語版を参照しました。）
-- [Installing kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
+以下の手順を参考にします。
+- [kubeadmのインストール](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
 
-### 始める前に
-
-swapを無効化します。
+「始める前に」にSwapがオフであること、と記載がありますが、swapがオフになっていなかったので無効化します。
 
 ```console
 sudo swapoff -a
@@ -36,7 +34,9 @@ sudo swapoff -a
 
 ### ポートの開放
 
-Control Planeノードのポートを開放します。
+kubernetesのコンポーネントが互いに通信するために、[これらのポート](https://kubernetes.io/docs/reference/networking/ports-and-protocols/)を開く必要があります。
+
+RockyはRHEL系なので`firewall-cmd`を使って、Control Planeノードのポートを開放します。
 
 ```console
 sudo firewall-cmd --add-port=6443/tcp --permanent
@@ -68,7 +68,12 @@ sudo firewall-cmd --list-ports
 ```
 ### コンテナランタイムのインストール
 
-まずはカーネルモジュールを起動時に自動でロードするに設定します。
+[コンテナランタイム](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/)を参考に、各ノードに設定をしていきます。
+
+[インストールと設定の必須要件](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%A8%E8%A8%AD%E5%AE%9A%E3%81%AE%E5%BF%85%E9%A0%88%E8%A6%81%E4%BB%B6)に記載されているように、全コンテナランタイムに共通の設定をします。
+
+まずはカーネルモジュールが起動時に自動でロードされるように設定します。
+
 ```console
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -79,7 +84,7 @@ sudo modprobe overlay
 sudo modprobe br_netfilter
 ```
 
-以下のコマンドを実行して`br_netfilter`と`overlay`モジュールが読み込まれていることを確認します。
+次のコマンドを実行して`br_netfilter`と`overlay`モジュールが読み込まれていることを確認します。
 
 ```console
 lsmod | grep br_netfilter
@@ -104,6 +109,10 @@ sudo sysctl --system
 sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
 ```
 
+#### containerdのインストール
+
+Rocky Linuxでcontainerdをインストールする方法についてあまり情報がなかったので、とても苦労しました。
+
 contaierdをインストールします。
 
 ```console
@@ -127,6 +136,8 @@ systemctl enable --now containerd.service
 ### kubeadm, kubelet, kubectlのインストール
 
 kubeadm, kubelet, kubectlをインストールします。
+日本語版だとbaserepoのurlの記述が古かったので、英語版を参考にしました。
+参考: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
 
 ```console
 sudo sh -c "cat <<EOF > /etc/yum.repos.d/kubernetes.repo
@@ -202,7 +213,7 @@ scp nuc01:/etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-以下が表示されればOKです。
+次のように表示されればOKです。
 
 ```console
 $ % kubectl get pods
