@@ -17,6 +17,12 @@ categories: ["terraform"]
 
 「キー」のタブから「鍵を追加」を選択し、JSONキーを作成します。
 
+作成されたJSONキーをローカルにダウンロードして、`~/.config/gcloud`以下に配置します。
+そして、`~/.zshrc`に環境変数を設定します。
+```
+export GOOGLE_APPLICATION_CREDENTIALS=~/.config/gcloud/active-chimera-XXX-XXXXX.json
+```
+
 ## GCSバケットの作成
 
 コンソールから`kkato-terraform-state`というGCSのバケットを作成します。
