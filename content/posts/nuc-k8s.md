@@ -115,7 +115,7 @@ Rocky Linuxでcontainerdをインストールする方法についてあまり�
 以下の記事を参考にしました。
 - [Using containerd without docker](https://medium.com/@DannielWhatever/using-containerd-without-docker-9d08332781b4) (Installing containerdの部分)
 
-contaierdをインストールします。
+次のコマンドでcontaierdをインストールします。
 
 ```console
 sudo yum config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
