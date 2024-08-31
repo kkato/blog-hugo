@@ -2,6 +2,7 @@
 title: "TerraformのbackendとしてS3を使う"
 date: 2024-08-31T11:55:26+09:00
 draft: false
+categories: "terraform"
 ---
 
 tfstateをローカルで作成してから、S3に移すというのを試してみたいと思います。
