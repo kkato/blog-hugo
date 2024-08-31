@@ -9,7 +9,7 @@ TerraformのbackendとしてS3を使ってみます。
 
 参考: [Backend Type: s3](https://developer.hashicorp.com/terraform/language/settings/backends/s3)
 
-## IAMユーザーの追加
+## IAMユーザーの作成
 
 まず初めにIAMユーザーを追加します。
 
