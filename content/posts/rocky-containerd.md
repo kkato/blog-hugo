@@ -1,6 +1,6 @@
 ---
 title: "Rocky Linuxにcontainerdをインストールする方法"
-date: 2024-08-31T16:46:03+09:00
+date: 2024-06-30T16:46:03+09:00
 draft: false
 ---
 
