@@ -5,58 +5,17 @@ draft: false
 categories: ["terraform"]
 ---
 
-tfstateをローカルで作成してから、S3に移すというのを試してみたいと思います。
+TerraformのbackendとしてS3を使ってみます。
 
-## tfstateをローカルで作成する
+参考: [Backend Type: s3](https://developer.hashicorp.com/terraform/language/settings/backends/s3)
 
-まずは`test`というディレクトリの中に`local.tf`というファイルを作成します。
-
-```
-% tree .
-.
-└── test
-    └── local.tf
-```
-
-`local.tf`には以下のように`local_file`を定義します。
-
-```
-resource "local_file" "foo" {
-  content  = "Hello, World!"
-  filename = "/tmp/foo"
-}
-```
-
-参考: https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file
-
-
-そして`terraform init`, `terraform plan`, `terraform apply`を順次実行していきます。
-
-```
-% terraform init
-% terraform plan
-% terraform apply
-```
-
-そうすると、ローカルには`terraform.tfstate`というファイルが作成されます。
-```
-% tree .
-.
-└── test
-    ├── local.tf
-    └── terraform.tfstate
-```
-
-
-## tfstateをs3に移す
-
-### IAMユーザーの追加
+## IAMユーザーの追加
 
 まず初めにIAMユーザーを追加します。
 
 今回はAWSコンソールから`terraformer`というユーザーを作成し、`AmazonS3FllAccess`の権限を付与します。
 
-![](/images/terraform-backend/s3-full-access.png)
+![](/images/terraform-s3/s3-full-access.png)
 
 その後、「アクセスキーを作成」からCLI用のアクセスキーを作成します。
 
@@ -69,11 +28,11 @@ aws_access_key_id = XXXXX
 aws_secret_access_key = XXXXX
 ```
 
-### S3バケットの作成
+## S3バケットの作成
 
 AWSコンソールから`kkato-terraform-state`というS3バケットを作成します。
 
-### Terraform側の設定
+## Terraform側の設定
 
 `main.tf`というファイルを作成し、backendとproviderの設定をします。
 
@@ -92,7 +51,8 @@ provider "aws" {
 }
 ```
 
-その後`terraform init`を実行すると、`tfstate`をS3に移すことができます。
+その後`terraform init`を実行すると、`tfstate`をS3で管理することができます。
+(今回はすでにtfstateがローカルにある状態で、`terraform.tfstate`をS3にコピーしています。)
 
 ```
 % terraform init
@@ -130,11 +90,4 @@ should now work.
 If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
-```
-
-不要になったローカルの`tfstate`ファイルは削除します。
-
-```
-% rm terraform.tfstate
-% rm terraform.tfstate.backup
 ```
