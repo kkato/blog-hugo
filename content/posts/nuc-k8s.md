@@ -35,7 +35,6 @@ sudo swapoff -a
 ### ポートの開放
 
 kubernetesのコンポーネントが互いに通信するために、[これらのポート](https://kubernetes.io/docs/reference/networking/ports-and-protocols/)を開く必要があります。
-
 RockyはRHEL系なので`firewall-cmd`を使って、Control Planeノードのポートを開放します。
 
 ```console
@@ -68,10 +67,11 @@ sudo firewall-cmd --list-ports
 ```
 ### コンテナランタイムのインストール
 
-[コンテナランタイム](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/)を参考に、各ノードに設定をしていきます。
+[コンテナランタイム](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/)の手順を参考に、各ノードに設定をしていきます。
 
-[インストールと設定の必須要件](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%A8%E8%A8%AD%E5%AE%9A%E3%81%AE%E5%BF%85%E9%A0%88%E8%A6%81%E4%BB%B6)に記載されているように、全コンテナランタイムに共通の設定をします。
+#### インストールと設定の必須条件
 
+全コンテナランタイムに共通の設定をしていきます。
 まずはカーネルモジュールが起動時に自動でロードされるように設定します。
 
 ```console
@@ -112,6 +112,8 @@ sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables ne
 #### containerdのインストール
 
 Rocky Linuxでcontainerdをインストールする方法についてあまり情報がなかったので、とても苦労しました。
+以下の記事を参考にしました。
+- [Using containerd without docker](https://medium.com/@DannielWhatever/using-containerd-without-docker-9d08332781b4) (Installing containerdの部分)
 
 contaierdをインストールします。
 
@@ -121,13 +123,13 @@ sudo yum install -y containerd.io
 sudo sh -c "containerd config default > /etc/containerd/config.toml"
 ```
 
-その後、以下の設定を「false」から「true」に変更します。
+[systemd cgroupドライバーを構成する](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/#systemd-cgroup%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%83%BC%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B)に記載されているように、`/etc/containerd/config.toml`の`ssystemdCgroup`の値を「false」から「true」に変更します。
 
 ```console
 SystemdCgroup = true
 ```
 
-containerdを有効化します。
+そして最後にcontainerdを有効化します。
 
 ```console
 systemctl enable --now containerd.service
@@ -136,8 +138,7 @@ systemctl enable --now containerd.service
 ### kubeadm, kubelet, kubectlのインストール
 
 kubeadm, kubelet, kubectlをインストールします。
-日本語版だとbaserepoのurlの記述が古かったので、英語版を参考にしました。
-参考: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+[日本語版](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#kubeadm-kubelet-kubectl%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB)だとbaserepoのurlの記述が古かったので、[英語版](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl)を参考にしました。
 
 ```console
 sudo sh -c "cat <<EOF > /etc/yum.repos.d/kubernetes.repo
