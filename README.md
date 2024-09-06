@@ -1,4 +1,4 @@
-# kkato.page
+# kkato.dev
 
 This is my tech blog.
 
