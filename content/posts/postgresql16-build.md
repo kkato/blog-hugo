@@ -5,10 +5,12 @@ draft: false
 categories: ["postgresql"]
 ---
 
-M1 Mac (macOS 14.4.1) を使っています。
+PostgreSQL16をソースコードからビルドしてみたのですが、いくつかつまづいたポイントがあるので、それらにご紹介します。
+
+前提として M1 Mac (macOS 14.4.1) を使っています。
 
 PostgreSQL16をソースコードからビルドするためのコマンドは以下のとおりです。
-configureには以下のオプションを指定しています。
+configureコマンドには以下のオプションを指定しています。
 - デバッグするためのオプション: --enable-debug --enable-cassert --enable-tap-tests
 - インストール先のディレクトリを指定するオプション: --prefix
 
@@ -22,7 +24,7 @@ configureには以下のオプションを指定しています。
 % make install
 ```
 
-## つまづきポイント1
+## `icu-uc`, `icu-i18n`のパッケージが見つからない
 
 `icu-uc`, `icu-i18n`のパッケージが見つからないと言われました。
 
@@ -43,8 +45,6 @@ and ICU_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 ```
 
-### 解決策
-
 PKG_CONFIG_PATHという環境変数を設定してあげれば良いみたいです。
 以下のコマンドを実行すると、どう設定すればいいか教えてくれました。
 
@@ -62,7 +62,7 @@ echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig"' >> ~/.zshr
 source ~/.zshrc
 ```
 
-## つまづきポイント2
+## TAPテストに必要なモジュールがインストールされていない
 
 TAPテストに必要なPerlのmoduleがインストールされていなかったみたいです。
 
@@ -72,9 +72,9 @@ BEGIN failed--compilation aborted at ./config/check_modules.pl line 14.
 configure: error: Additional Perl modules are required to run TAP tests
 ```
 
-### 解決策
 
 TAPテストに必要なPerlのmoduleをインストールしました。
+
 参考: https://www.postgresql.jp/document/16/html/regress-tap.html
 
 ```
