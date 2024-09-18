@@ -11,7 +11,7 @@ PostgreSQL16をソースコードからビルドしてみたのですが、い�
 
 PostgreSQL16をソースコードからビルドするためのコマンドは以下のとおりです。
 configureコマンドには以下のオプションを指定しています。
-- デバッグするためのオプション: --enable-debug --enable-cassert --enable-tap-tests
+- デバッグしやすくするためのオプション: --enable-debug --enable-cassert --enable-tap-tests
 - インストール先のディレクトリを指定するオプション: --prefix
 
 参考: https://www.postgresql.jp/document/16/html/install-make.html#CONFIGURE-OPTIONS
