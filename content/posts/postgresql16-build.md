@@ -1,5 +1,5 @@
 ---
-title: "MacOSでPostgreSQL16のビルドでつまづいた箇所"
+title: "PostgreSQL16をソースコードからビルドしてみる"
 date: 2024-09-18T14:47:07+09:00
 draft: false
 categories: ["postgresql"]
