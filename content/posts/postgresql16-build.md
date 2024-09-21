@@ -9,13 +9,6 @@ PostgreSQL16をソースコードからビルドしてみたのですが、い�
 
 前提として M1 Mac (macOS 14.4.1) を使っています。
 
-PostgreSQL16をソースコードからビルドするためのコマンドは以下のとおりです。
-configureコマンドには以下のオプションを指定しています。
-- デバッグしやすくするためのオプション: --enable-debug --enable-cassert --enable-tap-tests
-- インストール先のディレクトリを指定するオプション: --prefix
-
-参考: https://www.postgresql.jp/document/16/html/install-make.html#CONFIGURE-OPTIONS
-
 ```
 % git clone git://git.postgresql.org/git/postgresql.git
 % cd postgresql
@@ -23,6 +16,14 @@ configureコマンドには以下のオプションを指定しています。
 % make -j 4
 % make install
 ```
+
+PostgreSQL16をソースコードからビルドするためのコマンドは以下のとおりです。
+configureコマンドには以下のオプションを指定しています。
+- デバッグしやすくするためのオプション: --enable-debug --enable-cassert --enable-tap-tests
+- インストール先のディレクトリを指定するオプション: --prefix
+
+参考: https://www.postgresql.jp/document/16/html/install-make.html#CONFIGURE-OPTIONS
+
 
 ## `icu-uc`, `icu-i18n`のパッケージが見つからない
 
