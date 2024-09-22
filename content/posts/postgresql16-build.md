@@ -7,7 +7,7 @@ categories: ["postgresql"]
 
 PostgreSQL16をソースコードからビルドしてみたのですが、いくつかつまづいたポイントがあるので、それらにご紹介します。
 
-前提として M1 Mac (macOS 14.4.1) を使っています。
+PostgreSQL16をソースコードからビルドするためのコマンドは以下のとおりです。前提として M1 Mac (macOS 14.4.1) を使っています。
 
 ```
 % git clone git://git.postgresql.org/git/postgresql.git
@@ -16,8 +16,6 @@ PostgreSQL16をソースコードからビルドしてみたのですが、い�
 % make -j 4
 % make install
 ```
-
-PostgreSQL16をソースコードからビルドするためのコマンドは以下のとおりです。
 configureコマンドには以下のオプションを指定しています。
 - デバッグしやすくするためのオプション: --enable-debug --enable-cassert --enable-tap-tests
 - インストール先のディレクトリを指定するオプション: --prefix
