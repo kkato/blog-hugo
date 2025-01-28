@@ -2,71 +2,69 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://kkato.dev/posts/webhook-nginx/</loc>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-09-18T14:47:07+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/postgresql/</loc>
+    <lastmod>2024-09-18T14:47:07+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/postgresql16-build/</loc>
+    <lastmod>2024-09-18T14:47:07+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-09-18T14:47:07+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-09-18T14:47:07+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/docker/</loc>
+    <lastmod>2024-06-30T16:46:03+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/rocky-containerd/</loc>
+    <lastmod>2024-06-30T16:46:03+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/kubernetes/</loc>
+    <lastmod>2024-06-05T21:20:47+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/nuc-k8s/</loc>
+    <lastmod>2024-06-05T21:20:47+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/idea/</loc>
+    <lastmod>2024-02-06T14:31:31+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/wantedly/</loc>
+    <lastmod>2024-02-06T14:31:31+09:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/webhook-nginx/</loc>
     <lastmod>2023-08-13T13:11:42+09:00</lastmod>
   </url><url>
-    <loc>https://kkato.dev/</loc>
-    <lastmod>2023-08-13T13:11:42+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/tags/kubernetes/</loc>
-    <lastmod>2023-08-13T13:11:42+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/posts/</loc>
-    <lastmod>2023-08-13T13:11:42+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/tags/prometheus/</loc>
-    <lastmod>2023-08-13T13:11:42+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/tags/</loc>
-    <lastmod>2023-08-13T13:11:42+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/tags/k8s/</loc>
+    <loc>http://localhost:1313/posts/k8s-job-alert/</loc>
     <lastmod>2023-08-08T19:48:39+09:00</lastmod>
   </url><url>
-    <loc>https://kkato.dev/posts/k8s-job-alert/</loc>
-    <lastmod>2023-08-08T19:48:39+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/tags/aws/</loc>
-    <lastmod>2023-08-02T13:11:46+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/tags/ec2/</loc>
-    <lastmod>2023-08-02T13:11:46+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/posts/ec2-user/</loc>
-    <lastmod>2023-08-02T13:11:46+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/tags/linux/</loc>
+    <loc>http://localhost:1313/tags/linux/</loc>
     <lastmod>2023-07-12T21:23:52+09:00</lastmod>
   </url><url>
-    <loc>https://kkato.dev/posts/pubkey-auth/</loc>
+    <loc>http://localhost:1313/posts/pubkey-auth/</loc>
     <lastmod>2023-07-12T21:23:52+09:00</lastmod>
   </url><url>
-    <loc>https://kkato.dev/posts/kubespray/</loc>
+    <loc>http://localhost:1313/posts/kubespray/</loc>
     <lastmod>2023-05-01T10:07:31+09:00</lastmod>
   </url><url>
-    <loc>https://kkato.dev/tags/raspberry-pi/</loc>
+    <loc>http://localhost:1313/posts/raspi-k8s/</loc>
     <lastmod>2023-04-23T16:13:42+09:00</lastmod>
   </url><url>
-    <loc>https://kkato.dev/posts/raspi-k8s/</loc>
-    <lastmod>2023-04-23T16:13:42+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/tags/idea/</loc>
+    <loc>http://localhost:1313/posts/omscentral/</loc>
     <lastmod>2023-04-10T18:05:06+09:00</lastmod>
   </url><url>
-    <loc>https://kkato.dev/posts/omscentral/</loc>
-    <lastmod>2023-04-10T18:05:06+09:00</lastmod>
-  </url><url>
-    <loc>https://kkato.dev/posts/omscs/</loc>
+    <loc>http://localhost:1313/posts/omscs/</loc>
     <lastmod>2023-03-21T18:04:49+09:00</lastmod>
   </url><url>
-    <loc>https://kkato.dev/archive/</loc>
+    <loc>http://localhost:1313/archive/</loc>
   </url><url>
-    <loc>https://kkato.dev/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>https://kkato.dev/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
   </url><url>
-    <loc>https://kkato.dev/search/</loc>
-  </url><url>
-    <loc>https://kkato.dev/talks/</loc>
+    <loc>http://localhost:1313/search/</loc>
   </url>
 </urlset>

@@ -2,7 +2,7 @@
 title: "Rocky Linuxにcontainerdをインストールする方法"
 date: 2024-06-30T16:46:03+09:00
 draft: false
-categories: ["docker"]
+tags: ["docker"]
 ---
 
 以前Kubernetesクラスタを構築するときに、Rocky Linuxでcontainerdをインストールする方法についてあまり情報がなかったので、とても苦労しました。
