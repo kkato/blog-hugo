@@ -1,6 +1,7 @@
 baseURL: "https://kkato.dev/"
 title: kkato.dev
-paginate: 5
+pagination:
+  pagerSize: 5
 theme: PaperMod
 
 enableRobotsTXT: true
