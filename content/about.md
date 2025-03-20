@@ -8,8 +8,8 @@ draft: false
 ## Experience
 | Period            | Position                          |
 |-------------------|-----------------------------------|
-| 2024/01 - Present | Infrastructure Engineer @ Wantedly |
-| 2021/01 - 2023/12 | Database Engineer @ NTT Data           |
+| 2024/01 - Present | Infrastructure Engineer @ Wantedly, Inc. |
+| 2021/01 - 2023/12 | Database Engineer @ NTT DATA, Inc.       |
 
 ## Education
 | Period            | Degree                                                                 |
