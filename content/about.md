@@ -5,7 +5,6 @@ hidemeta: true
 draft: false
 ---
 
-Hi, my name is Ken.
 I am a Cloud Infrastructure Engineer / DevOps Engineer / Site Reliability Engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, Go.
 
 ## Experience
