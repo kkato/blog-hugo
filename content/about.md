@@ -23,4 +23,6 @@ I am a Cloud Infrastructure Engineer / DevOps Engineer / Site Reliability Engine
 - [Speaker Deck](https://speakerdeck.com/kkato1)
 
 ## Contributions
-- [PostgreSQL](https://git.postgresql.org/gitweb/?p=postgresql.git&a=search&h=HEAD&st=commit&s=Ken+Kato)
+- [postgresql](https://git.postgresql.org/gitweb/?p=postgresql.git&a=search&h=HEAD&st=commit&s=Ken+Kato)
+- [jpug-docs](https://github.com/pgsql-jp/jpug-doc/pulls?q=is%3Apr+author%3Akkato+)
+- [prometheus](https://github.com/prometheus/docs/pulls?q=is%3Apr+author%3Akkato+)
