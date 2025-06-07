@@ -5,7 +5,7 @@ hidemeta: true
 draft: false
 ---
 
-I am a Cloud Infrastructure Engineer / DevOps Engineer / Site Reliability Engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go.
+I am a Infrastructure Engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go.
 
 ## Experience
 | Period            | Position                          |
