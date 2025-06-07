@@ -1,7 +1,7 @@
 ---
 title: "Renovateの導入方法"
 date: 2025-05-06T15:27:19+09:00
-draft: true
+draft: false
 ---
 
 手動での依存パッケージのアップデートが大変だったので、[Renovate](https://docs.renovatebot.com/)を導入してみました。

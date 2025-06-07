@@ -11,8 +11,77 @@
     </image>
     <generator>Hugo -- 0.140.0</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 18 Sep 2024 14:47:07 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 04 Jun 2025 22:08:59 +0900</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install Cloudnativepg</title>
+      <link>http://localhost:1313/posts/install-cloudnativepg/</link>
+      <pubDate>Wed, 04 Jun 2025 22:08:59 +0900</pubDate>
+      <guid>http://localhost:1313/posts/install-cloudnativepg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Postgres Operators</title>
+      <link>http://localhost:1313/posts/postgres-operators/</link>
+      <pubDate>Wed, 04 Jun 2025 22:08:44 +0900</pubDate>
+      <guid>http://localhost:1313/posts/postgres-operators/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ArgoCD Install</title>
+      <link>http://localhost:1313/posts/install-argocd/</link>
+      <pubDate>Tue, 06 May 2025 15:27:19 +0900</pubDate>
+      <guid>http://localhost:1313/posts/install-argocd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Renovateの導入方法</title>
+      <link>http://localhost:1313/posts/install-renovate/</link>
+      <pubDate>Tue, 06 May 2025 15:27:19 +0900</pubDate>
+      <guid>http://localhost:1313/posts/install-renovate/</guid>
+      <description>&lt;p&gt;手動での依存パッケージのアップデートが大変だったので、&lt;a href=&#34;https://docs.renovatebot.com/&#34;&gt;Renovate&lt;/a&gt;を導入してみました。
+その手順と設定について簡単にメモします。&lt;/p&gt;
+&lt;h2 id=&#34;renovateとは&#34;&gt;Renovateとは？&lt;/h2&gt;
+&lt;p&gt;Renovateは、依存関係の更新を自動化してくれるOSSのツールです。元々は個人開発から始まり、現在はイスラエルのセキュリティ企業 Mend社によって開発されています。&lt;/p&gt;
+&lt;p&gt;リポジトリ内の依存関係をスキャンし、新しいバージョンが利用可能な場合には自動でPull Request（PR）を作成してくれます。
+Node.jsのnpmやyarnはもちろん、Go modules、Docker、Terraformなど多くの言語やパッケージマネージャーに対応しているのも特徴です。&lt;/p&gt;
+&lt;p&gt;対応しているパッケージマネージャーの一覧は&lt;a href=&#34;https://docs.renovatebot.com/modules/manager/#supported-managers&#34;&gt;こちら&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;導入手順&#34;&gt;導入手順&lt;/h2&gt;
+&lt;p&gt;renovateはセルフホストする方法とGitHub Appを使う方法の2通りあります。手軽に使いたいので、今回はGitHub Appを使って導入します。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/apps/renovate&#34;&gt;https://github.com/apps/renovate&lt;/a&gt; から「Configure」を押す&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/install-renovate/configure.png&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;全てのリポジトリを選択し、導入する&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;全てのリポジトリを選択したとしても、renovateの設定ファイルがあるリポジトリのみrenovateが有効になります。
+そのため、renovateの設定ファイルがないリポジトリではrenovateが無効化されます。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/install-renovate/repository-access.png&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;renovateの設定ファイル&lt;code&gt;renovate.json&lt;/code&gt;を作成し、リポジトリのrootにpushする&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;各リポジトリで&lt;code&gt;Configure Renovate&lt;/code&gt;というPull Requestが自動的に作成されます。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/install-renovate/configure-renovate.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;自動生成された&lt;code&gt;renovate.json&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;#34;$schema&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;https://docs.renovatebot.com/renovate-schema.json&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;#34;extends&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;config:recommended&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;schema&#34;&gt;&lt;code&gt;$schema&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Renovateにおける&lt;code&gt;$schema&lt;/code&gt;は、&lt;code&gt;renovate.json&lt;/code&gt;で使える設定項目やその値の種類・ルールを定義しています。
+これにより、どの設定が有効かをエディタが理解できたり、エディタによる補完などが有効になったりします。&lt;/p&gt;
+&lt;h3 id=&#34;extends&#34;&gt;&lt;code&gt;extends&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;extends&lt;/code&gt;では、Renovateがあらかじめ用意しているルールセットを指定することができます。
+上記の例では&lt;code&gt;config:recommended&lt;/code&gt;を指定しています。これには、どの言語やプロジェクトでも使える推奨設定が含まれています。
+（以前は&lt;code&gt;config:recommended&lt;/code&gt;ではなく、&lt;code&gt;config:base&lt;/code&gt;と呼ばれていたみたいです。）&lt;/p&gt;
+&lt;p&gt;config:recommended の詳細については&lt;a href=&#34;https://docs.renovatebot.com/presets-config/#configrecommended&#34;&gt;こちら&lt;/a&gt; &lt;br&gt;
+またその他設定項目については&lt;a href=&#34;https://docs.renovatebot.com/configuration-options/&#34;&gt;こちら&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;現在業務でRenovate を使ってみて感じたのは、カスタマイズ性が非常に高い反面、設定項目が多くてややとっつきにくいという点でした。しかし、プライベートの時間を使って軽く触ってみたところ、導入自体は驚くほど簡単で、いい意味で期待を裏切られました。最小限の設定でもすぐに使い始めることができたので、もう少しドキュメントを読んで複雑な設定も試してみたいと思いました。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>PostgreSQL16をソースコードからビルドしてみる</title>
       <link>http://localhost:1313/posts/postgresql16-build/</link>
@@ -361,7 +430,7 @@ kube-state-metricsではCronJobやJobの状態をメトリクスとして取得�
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;今回はkube-state-metricsを活用して、CronJobが失敗した時のアラートを設定しました。他にもっといい方法をご存知の方は教えていただけるとありがたいです。&lt;/p&gt;</description>
+&lt;p&gt;今回はkube-state-metricsを活用して、CronJobが失敗した時のアラートを設定しました。CronJob失敗時にアラートを上げる方法についてはあまり参考になる記事がなく、私なりに考えてみました。他にもっといい方法をご存知の方は教えていただけるとありがたいです。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linuxで公開鍵認証をする</title>
@@ -702,7 +771,8 @@ Control Planeノードx1 Workerノードx3の構成です。&lt;/p&gt;
       <link>http://localhost:1313/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/about/</guid>
-      <description>&lt;h2 id=&#34;experience&#34;&gt;Experience&lt;/h2&gt;
+      <description>&lt;p&gt;I am a Cloud Infrastructure Engineer / DevOps Engineer / Site Reliability Engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go.&lt;/p&gt;
+&lt;h2 id=&#34;experience&#34;&gt;Experience&lt;/h2&gt;
 &lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -713,11 +783,11 @@ Control Planeノードx1 Workerノードx3の構成です。&lt;/p&gt;
   &lt;tbody&gt;
       &lt;tr&gt;
           &lt;td&gt;2024/01 - Present&lt;/td&gt;
-          &lt;td&gt;Infrastructure Engineer @ Wantedly&lt;/td&gt;
+          &lt;td&gt;Infrastructure Engineer @ Wantedly, Inc.&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;2021/01 - 2023/12&lt;/td&gt;
-          &lt;td&gt;Database Engineer @ NTT Data&lt;/td&gt;
+          &lt;td&gt;Database Engineer @ NTT DATA, Inc.&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -746,7 +816,9 @@ Control Planeノードx1 Workerノードx3の構成です。&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;contributions&#34;&gt;Contributions&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://git.postgresql.org/gitweb/?p=postgresql.git&amp;amp;a=search&amp;amp;h=HEAD&amp;amp;st=commit&amp;amp;s=Ken+Kato&#34;&gt;PostgreSQL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://git.postgresql.org/gitweb/?p=postgresql.git&amp;amp;a=search&amp;amp;h=HEAD&amp;amp;st=commit&amp;amp;s=Ken+Kato&#34;&gt;postgresql&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/pgsql-jp/jpug-doc/pulls?q=is%3Apr+author%3Akkato+&#34;&gt;jpug-docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/prometheus/docs/pulls?q=is%3Apr+author%3Akkato+&#34;&gt;prometheus&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
   </channel>
