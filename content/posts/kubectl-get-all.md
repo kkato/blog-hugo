@@ -1,5 +1,5 @@
 ---
-title: "kubectlで全てのリソースをgetする方法"
+title: "kubectコマンドで全てのリソースをgetする方法"
 date: 2025-08-11T13:02:00+09:00
 draft: false
 tags: ["kubernetes", "command"]
