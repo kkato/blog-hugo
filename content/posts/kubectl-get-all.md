@@ -5,35 +5,33 @@ draft: false
 tags: ["kubernetes", "command"]
 ---
 
-`kubectl get all`だとCustom Resourceが表示されないので、全てのリソースが把握できずに困りました。`kubectl api-resources`コマンドを使えば、Custom Resourceも含めてサポートされているAPIリソースが全て把握できるので、それを応用して全てのリソースを表示できるようようにしました。\
+`kubectl get all`だとCustom Resourceが表示されないので、全てのリソースが表示できずに困りました。`kubectl api-resources`コマンドを使えば、Custom Resourceも含めてサポートされているAPIリソースを全て把握できるので、それを応用して全てのリソースを表示できるようになりました。
 備忘録として雑に書いておきます。
 
 ## 全てのリソースを表示するコマンド
 
 以下のコマンドで、特定のnamespaceに存在する、全てのリソース(Custom Resourceも含めて)を表示することができます。
 
-```
+```bash
 kubectl get $(kubectl api-resources --verbs=list --namespaced -o name | tr '\n' ',' | sed 's/,$//') -n <namespace>
 ```
 
 ### 各コマンドの説明
 
-```
+```bash
 kubectl api-resources --verbs=list --namespaced -o name
 ```
-- `kubectl api-resources`: クラスター内の全てのKuberentesリソース種別を表示
+- `kubectl api-resources`: クラスター内の全てのKubernetesリソース種別を表示
 - `--verbs=list`: list操作が可能なものに絞る
-- `--namespaced`L 名前空間に属するリソースに絞る (NamespaceやNodeなどのcluster-scopedなりソースは除外)
+- `--namespaced`: 名前空間に属するリソースに絞る (NamespaceやNodeなどのcluster-scopedリソースは除外)
 - `-o name`: kubectlで直接使えるリソース名だけを出力
 
+```bash
+tr '\n' ','
 ```
-tr `\n` `,`
-```
+- 出力されたリソース名を、改行区切りからカンマ区切りに変換
 
-- 出力されたリソース名を、開業区切りからカンマ区切りに変換
-
-```
+```bash
 sed 's/,$//'
 ```
-
-- 末尾に着いてしまった余分なカンマを削除
+- 末尾に付いてしまった余分なカンマを削除
