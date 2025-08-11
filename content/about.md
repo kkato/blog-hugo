@@ -5,12 +5,12 @@ hidemeta: true
 draft: false
 ---
 
-I am a Infrastructure Engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go.
+I am a Site Reliablity Engineer with experience in Kubernetes, PostgreSQL, AWS, and Terraform.
 
 ## Experience
 | Period            | Position                          |
 |-------------------|-----------------------------------|
-| 2024/01 - Present | Infrastructure Engineer @ Wantedly, Inc. |
+| 2024/01 - Present | Site Reliability Engineer @ Wantedly, Inc. |
 | 2021/01 - 2023/12 | Database Engineer @ NTT DATA, Inc.       |
 
 ## Education
