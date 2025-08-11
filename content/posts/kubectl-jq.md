@@ -1,5 +1,5 @@
 ---
-title: "jqコマンドの便利な使い方"
+title: "kubectlコマンドとjqコマンドの便利な使い方"
 date: 2025-08-10T19:52:30+09:00
 draft: false
 tags: ["kubernetes", "command"]
