@@ -13,7 +13,7 @@ tags: ["kubernetes", "command"]
 以下のコマンドで、特定のnamespaceに存在する、全てのリソース(Custom Resourceも含めて)を表示することができます。
 
 ```bash
-kubectl get $(kubectl api-resources --verbs=list --namespaced -o name | tr '\n' ',' | sed 's/,$//') -n <namespace>
+kubectl get $(kubectl api-resources --verbs=list --namespaced -o name | grep -v "events" | tr '\n' ',' | sed 's/,$//') -n openebs
 ```
 
 ### 各コマンドの説明
