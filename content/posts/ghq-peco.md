@@ -2,7 +2,7 @@
 title: "ghqとpecoを使った効率的なリポジトリ管理"
 date: 2025-06-04T22:08:44+09:00
 draft: false
-tags: ["command", "git", "productivity"]
+tags: ["git", "command"]
 ---
 
 他の記事でも多数紹介されていますが、最近`ghq`と`peco`を使ってみてとても便利だったので、自身のブログでも紹介します。
