@@ -5,7 +5,7 @@ hidemeta: true
 draft: false
 ---
 
-I am a Infrastrcture Enginner with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go.
+I am a site reliablity engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go.
 I am interested in contributing to OSS.
 In my free time, I like to go bouldering, cooking, and travelling.
 
