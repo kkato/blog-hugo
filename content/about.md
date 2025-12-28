@@ -5,7 +5,11 @@ hidemeta: true
 draft: false
 ---
 
-I am a Cloud Engineer / DevOps Engineer / SRE with experience in Kubernetes, PostgreSQL, AWS, and Terraform.
+I am a Infrastrcture Enginner with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go.
+
+I am interested in contributing to OSS.
+
+In my free time, I like to go bouldering, cooking, and travelling.
 
 ## Experience
 | Period            | Position                          |
@@ -23,6 +27,6 @@ I am a Cloud Engineer / DevOps Engineer / SRE with experience in Kubernetes, Pos
 - [Speaker Deck](https://speakerdeck.com/kkato1)
 
 ## Contributions
-- [postgresql](https://git.postgresql.org/gitweb/?p=postgresql.git&a=search&h=HEAD&st=commit&s=Ken+Kato)
-- [jpug-docs](https://github.com/pgsql-jp/jpug-doc/pulls?q=is%3Apr+author%3Akkato+)
-- [prometheus](https://github.com/prometheus/docs/pulls?q=is%3Apr+author%3Akkato+)
+- [postgresql.git](https://git.postgresql.org/gitweb/?p=postgresql.git&a=search&h=HEAD&st=commit&s=Ken+Kato)
+- [pgsql-jp/jpug-doc](https://github.com/pgsql-jp/jpug-doc/pulls?q=is%3Apr+author%3Akkato+)
+- [prometheus/docs](https://github.com/prometheus/docs/pulls?q=is%3Apr+author%3Akkato+)
