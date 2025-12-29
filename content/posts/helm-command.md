@@ -1,5 +1,5 @@
 ---
-title: "Helmコマンドの基礎まとめ"
+title: "Helmコマンド まとめ"
 date: 2025-12-29T09:37:48+09:00
 draft: false
 tags: ["kubernetes", "command"]
