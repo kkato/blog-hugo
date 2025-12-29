@@ -1,12 +1,12 @@
 ---
 title: "Helmコマンドの基礎まとめ"
-date: 2025-08-30T14:37:48+09:00
+date: 2025-12-29T09:37:48+09:00
 draft: false
 tags: ["kubernetes", "command"]
 ---
 
 HelmはKubernetes向けのパッケージマネージャーで、複雑なアプリケーションのデプロイを簡単にしてくれるツールです。
-。この記事では、Helmを使い始めるのに必要な基礎的なコマンドを備忘録として紹介します。
+Helmコマンドをよく忘れてしまうので、基本的なコマンドを備忘録としてまとめました。
 
 ## インストール方法
 
@@ -131,7 +131,3 @@ helm upgrade my-nginx bitnami/nginx --dry-run --debug
 # 生成されるKubernetesマニフェストを確認する
 helm template my-nginx bitnami/nginx
 ```
-
-## まとめ
-
-今回紹介したコマンドはHelmを使う上で基礎となるものばかりです。特に`helm list`、`helm get values`、`--dry-run`オプションは、運用中のリリース状態を把握するのに重宝します。Helmを使うことで、複雑なKubernetesアプリケーションのデプロイが格段に楽になるので、これらの基本コマンドをマスターして効率的な運用を目指しましょう。
