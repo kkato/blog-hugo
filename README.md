@@ -1,4 +1,4 @@
-# kkato.page
+# blog-hugo
 
 技術ブログのリポジトリです。
 
