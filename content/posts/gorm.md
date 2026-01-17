@@ -123,10 +123,6 @@ db.Model(&user).Updates(map[string]interface{}{
 })
 ```
 
-## まとめ
-
-GORMは「構造体を定義して`AutoMigrate`を流す→`Create/Find/Update/Delete`する」という流れだけ覚えれば、すぐに使い始められます。複雑なジョインやアソシエーションも用意されていますが、まずは上記の最小パターンで挙動を掴むのがおすすめです。
-
 ## 参考
 
 - [GORM Official Guides](https://gorm.io/docs/index.html)
