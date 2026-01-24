@@ -5,14 +5,14 @@ hidemeta: true
 draft: false
 ---
 
-I am a Site Reliablity engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go. \
+I am a Site Reliability Engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go. \
 I am interested in contributing to OSS. \
 In my free time, I like to go bouldering, cooking, and travelling.
 
 ## Experience
 | Period            | Position                          |
 |-------------------|-----------------------------------|
-| 2024/01 - Present | Infrastructure Engineer @ Wantedly, Inc. |
+| 2024/01 - Present | Site Reliability Engineer @ Wantedly, Inc. |
 | 2021/01 - 2023/12 | Database Engineer @ NTT DATA, Inc.       |
 
 ## Education
