@@ -63,7 +63,7 @@ ps aux | peco
 
 #### aliasの設定
 
-以下のaliasを`~/.bashrc`~/.zshrc`に追加します：
+以下のaliasを`~/.bashrc`や`~/.zshrc`に追加します：
 
 ```bash
 # リポジトリを選択してcdする
