@@ -10,7 +10,7 @@ tags: ["kubernetes"]
 
 ![](/images/nuc-k8s/nuc.jpg)
 
-## 前提
+### 前提
 
 - ベアメタル(Intel NUC11PAHi5)上に構築
 - Control Planex1台とWorkerx3台の4台構成
@@ -22,7 +22,7 @@ tags: ["kubernetes"]
 |-------|--------|------------|
 | 4コア | 16GB   | 500GB      |
 
-## kubeadmのインストール
+### kubeadmのインストール
 
 以下の手順を参考にします。
 - [kubeadmのインストール](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
@@ -33,7 +33,7 @@ tags: ["kubernetes"]
 sudo swapoff -a
 ```
 
-### ポートの開放
+#### ポートの開放
 
 kubernetesのコンポーネントが互いに通信するために、[これらのポート](https://kubernetes.io/docs/reference/networking/ports-and-protocols/)を開く必要があります。
 RockyはRHEL系なので`firewall-cmd`を使って、Control Planeノードのポートを開放します。
@@ -66,11 +66,11 @@ sudo firewall-cmd --add-port=10250/tcp --permanent
 sudo firewall-cmd --reload
 sudo firewall-cmd --list-ports
 ```
-### コンテナランタイムのインストール
+#### コンテナランタイムのインストール
 
 [コンテナランタイム](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/)の手順を参考に、各ノードに設定をしていきます。
 
-#### インストールと設定の必須条件
+##### インストールと設定の必須条件
 
 全コンテナランタイムに共通の設定をしていきます。
 まずはカーネルモジュールが起動時に自動でロードされるように設定します。
@@ -110,7 +110,7 @@ sudo sysctl --system
 sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
 ```
 
-#### containerdのインストール
+##### containerdのインストール
 
 Rocky Linuxでcontainerdをインストールする方法についてあまり情報がなかったので、とても苦労しました。
 以下の記事を参考にしました。
@@ -136,7 +136,7 @@ SystemdCgroup = true
 systemctl enable --now containerd.service
 ```
 
-### kubeadm, kubelet, kubectlのインストール
+#### kubeadm, kubelet, kubectlのインストール
 
 kubeadm, kubelet, kubectlをインストールします。
 [日本語版](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#kubeadm-kubelet-kubectl%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB)だとbaserepoのurlの記述が古かったので、[英語版](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl)を参考にしました。
@@ -162,11 +162,11 @@ sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
 ```
 
-## kubernetesクラスタの作成
+### kubernetesクラスタの作成
 以下の手順を参考にします。
 - [kubeadmを使用したクラスターの作成](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 
-### Control Planeノードのデプロイ
+#### Control Planeノードのデプロイ
 
 `kubeadm init`コマンドを使ってControl Planeノードをデプロイします。
 
@@ -174,7 +174,7 @@ sudo systemctl enable --now kubelet
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
 
-### Workerノードのデプロイ
+#### Workerノードのデプロイ
 
 `kubeadm join`コマンドを使って、Workerノードをデプロイします。
 
@@ -183,7 +183,7 @@ sudo kubeadm join 192.168.10.121:6443 --token bccqut.hxu0wkyo2y04i88c \
 	--discovery-token-ca-cert-hash sha256:b8db95c90e2d485ac499efb266aef624b464770cc89ff74b8a041fc0a2bab0b9
 ```
 
-### kubectlのインストール
+#### kubectlのインストール
 
 先にkubectlをインストールします。
 [macOS上でのkubectlのインストールおよびセットアップ](https://kubernetes.io/ja/docs/tasks/tools/install-kubectl-macos/)
@@ -205,7 +205,7 @@ autoload -Uz compinit && compinit
 source <(kubectl completion zsh)
 ```
 
-### kubeconfigの設定
+#### kubeconfigの設定
 
 kubectlを使ってk8sクラスタ操作できるようにするために、以下を実行します。
 
@@ -222,7 +222,7 @@ $ % kubectl get pods
 No resources found in default namespace.
 ```
 
-### アドオンのインストール
+#### アドオンのインストール
 
 CNIプラグインであるFlannelをインストールします。
 
@@ -230,6 +230,6 @@ CNIプラグインであるFlannelをインストールします。
 kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 ```
 
-### まとめ
+#### まとめ
 
 NUCを使ってk8sクラスタを組んでみました。Rocky Linuxへのcontainerdのインストールやkubernetes package repositoryの変更などいくつかはまりましたが、なんとかk8sクラスタを構築することができました。運用がんばるぞ！

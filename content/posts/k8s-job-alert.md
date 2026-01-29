@@ -11,7 +11,7 @@ CronJobは、指定したcronフォーマットに基づいて定期的にJobを
 一方で、CronJobが失敗した際にどのように検知すべきかについては、あまり情報がありませんでした。
 なので、今回はそちらについて考えてみたいと思います。
 
-##  kube-state-metricsを活用する
+###  kube-state-metricsを活用する
 kube-state-metricsとはKubernetesクラスタ内のリソースの状態をメトリクスとして提供してくれるというものです。
 kube-state-metricsではCronJobやJobの状態をメトリクスとして取得することができます。
 この方式採用している記事が多かったので、こちらで検討を進めてみたいと思います。
@@ -21,7 +21,7 @@ kube-state-metricsではCronJobやJobの状態をメトリクスとして取得�
 - https://www.giffgaff.io/tech/monitoring-kubernetes-jobs
 
 
-## どのメトリクスを使い監視するか
+### どのメトリクスを使い監視するか
 CronJobはcronフォーマットで指定された時刻にJobを生成し、そのJobがPodを生成するという3層の親子構造になっています。
 また、CronJobとJobの関係は1対多で、JobとPodの関係は1対多になります。
 
@@ -51,7 +51,7 @@ Jobに関するメトリクスは複数ありますが、この中でも特に`k
 kube_job_failed > 0
 ```
 
-## アラートが発火し続けてしまう問題
+### アラートが発火し続けてしまう問題
 失敗したJobは削除されずに残り続けるので、アラートが発火し続けてしまいます。
 なので、Jobの`ttlSecondsAfterFinished`を設定し、数分後にJobが削除されるようにします。
 - ttlSecondsAfterFinished
@@ -63,5 +63,5 @@ CronJobの`failedJobsHistoryLimit`を設定するという方法も思いつき�
     - 失敗したJobを指定個数分残しておける
     - デフォルトは1
 
-## まとめ
+### まとめ
 今回はkube-state-metricsを活用して、CronJobが失敗した時のアラートを設定しました。CronJob失敗時にアラートを上げる方法についてはあまり参考になる記事がなく、私なりに考えてみました。他にもっといい方法をご存知の方は教えていただけるとありがたいです。

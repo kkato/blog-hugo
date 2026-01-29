@@ -21,7 +21,7 @@ k8s構築ツールはいろいろありますが、公式ドキュメントで�
 
 ちなみに、kubesprayは内部でkubeadmを使っているので、kubespray = kubeadm + Ansibleという感じです。また、kubesprayを使うと、コンテナランタイム(デフォルトはcontainerd)やPod間通信のネットワークプラグイン(デフォルトはcalico)などが自動でインストールされるので、非常に便利です。
 
-## 構築
+### 構築
 
 前提:
 - ベアメタル(Intel NUC11PAHi5)上に構築
@@ -34,7 +34,7 @@ k8s構築ツールはいろいろありますが、公式ドキュメントで�
 |-------|--------|------------|
 | 4コア | 16GB   | 500GB      |
 
-### ssh公開認証の設定
+#### ssh公開認証の設定
 手元のPCからパスワードなしでssh接続できるように公開鍵認証の設定をします。
 ssh-keygenのパスワードには空文字を指定します。
 ```sh
@@ -50,7 +50,7 @@ kkato@nuc01:~$ cat id_rsa.pub >> ~/.ssh/authorized_keys
 kkato@nuc01:~$ chmod 600 ~/.ssh/authorized_keys
 ```
 
-### /etc/hostsの編集
+#### /etc/hostsの編集
 手元のPCから各ノードへホスト名で接続できるように、/etc/hostsを編集します。
 ```sh
 kkato@bastion:~$ cat /etc/hosts
@@ -61,7 +61,7 @@ kkato@bastion:~$ cat /etc/hosts
 192.168.10.124 nuc04
 ```
 
-### ユーザーの設定
+#### ユーザーの設定
 各ノードのユーザーがパスワードなしでsudo実行できるよう設定します。
 ```sh
 kkato@nuc01:~$ sudo visudo
@@ -69,7 +69,7 @@ kkato@nuc01:~$ sudo visudo
 kkato   ALL=NOPASSWD:ALL
 ```
 
-### Firewallの無効化
+#### Firewallの無効化
 各ノードのFirewallを無効化します。
 ```sh
 kkato@nuc01:~$ sudo systemctl stop firewalld
@@ -77,7 +77,7 @@ kkato@nuc01:~$ sudo systemctl disable firewalld
 kkato@nuc01:~$ sudo systemctl status firewalld
 ```
 
-### kubesprayのダウンロード
+#### kubesprayのダウンロード
 kubesprayのgitリポジトリをクローンし、最新バージョンのブランチに移動します。
 ```sh
 kkato@bastion:~$ git clone https://github.com/kubernetes-sigs/kubespray.git
@@ -86,13 +86,13 @@ kkato@bastion:~/kubespray$ git branch -a
 kkato@bastion:~/kubespray$ git switch remotes/origin/release-2.21 --detach
 ```
 
-### 必要なパッケージのインストール
+#### 必要なパッケージのインストール
 必要なパッケージをインストールします。
 ```sh
 kkato@bastion:~/kubespray$ sudo pip3 install -r requirements.txt
 ```
 
-### インベントリファイルの編集
+#### インベントリファイルの編集
 Ansibleのインベントリファイルの雛形を作成します。
 ```sh
 kkato@bastion:~/kubespray$ cp -rfp inventory/sample inventory/mycluster
@@ -157,7 +157,7 @@ kkato@bastion:~/kubespray$ diff -r inventory/sample/group_vars/k8s_cluster/k8s-c
 ```
 
 
-### kubespray実行
+#### kubespray実行
 kubesprayを実行し、`failed=0`になっていることを確認します。
 ```sh
 kkato@bastion:~/kubespray$ ansible-playbook -i inventory/mycluster/hosts.yaml  --become --become-user=root cluster.yml
@@ -170,7 +170,7 @@ nuc03                      : ok=506  changed=34   unreachable=0    failed=0    s
 nuc04                      : ok=506  changed=34   unreachable=0    failed=0    skipped=754  rescued=0    ignored=1
 ```
 
-### kubectlの設定
+#### kubectlの設定
 kubectlがインスールされていることを確認します。そして、kubeconfigを`~/.kube/config`に配置します。
 ```sh
 kkato@bastion:~/kubespray$ ls /usr/local/bin/ | grep kubectl
@@ -187,7 +187,7 @@ kkato@bastion:~$ echo 'alias k=kubectl' >> ~/.bashrc
 kkato@bastion:~$ echo 'complete -F __start_kubectl k' >> ~/.bashrc
 ```
 
-### 動作確認
+#### 動作確認
 kubectlコマンドを実行すると、先程設定したノードが認識されていることがわかります。
 ```sh
 kkato@bastion:~$ k get nodes
@@ -198,9 +198,9 @@ nuc03   Ready    <none>          4m20s   v1.25.6
 nuc04   Ready    <none>          4m7s    v1.25.6
 ```
 
-## まとめ
+### まとめ
 前回はkubeadmを使ってk8sクラスタを構築しましたが、今回はkubesprayを使ってk8sクラスタを構築してみました。kubeadmよりも簡単にk8sクラスタを構築できて、すごく便利でした。
 
-# 参考
+### 参考
 - [GitHub - kubernetes-sigs/kubespray: Deploy a Production Ready Kubernetes Cluster](https://github.com/kubernetes-sigs/kubespray)
 - [kubesprayを使ったKubernetesのインストール](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubespray/)

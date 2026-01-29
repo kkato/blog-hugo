@@ -7,7 +7,7 @@ tags: ["go"]
 
 最近、Goを勉強していてGORMを触る機会があったので、基本的な部分を調べてみました。
 
-## モデル定義
+### モデル定義
 
 GORMでは構造体をそのままテーブルにマップします。`gorm.Model`を埋め込むと`ID`や`CreatedAt`など便利なカラムが自動で付きます。
 
@@ -24,7 +24,7 @@ type User struct {
 }
 ```
 
-## DB接続とマイグレーション
+### DB接続とマイグレーション
 
 PostgreSQLを例に、DBへ接続し、モデルに沿ってテーブルを自動生成します。`dsn`は環境に合わせて書き換えてください。
 
@@ -52,7 +52,7 @@ func main() {
 }
 ```
 
-## CRUD操作
+### CRUD操作
 
 基本的なCRUD操作は以下のように行います。
 
@@ -109,7 +109,7 @@ func main() {
 }
 ```
 
-### よく使うクエリの書き方
+#### よく使うクエリの書き方
 
 ```go
 // 条件付きで複数取得
@@ -123,7 +123,7 @@ db.Model(&user).Updates(map[string]interface{}{
 })
 ```
 
-## 参考
+### 参考
 
 - [GORM Official Guides](https://gorm.io/docs/index.html)
 - [GORM PostgreSQL Driver](https://gorm.io/docs/connecting_to_the_database.html#PostgreSQL)

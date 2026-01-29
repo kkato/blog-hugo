@@ -8,7 +8,7 @@ tags: ["kubernetes", "command"]
 `kubectl get all`だとCustom Resourceが表示されないので、全てのリソースが表示できずに困りました。`kubectl api-resources`を使えば、Custom Resourceも含めてサポートされているAPIリソースを全て把握できるので、それを応用して全てのリソースを表示できるようになりました。
 備忘録として雑に書いておきます。
 
-## 全てのリソースを表示する
+### 全てのリソースを表示する
 
 以下のコマンドで、特定のnamespaceに存在する、全てのリソース(Custom Resourceも含めて)を表示することができます。
 
@@ -16,7 +16,7 @@ tags: ["kubernetes", "command"]
 kubectl get $(kubectl api-resources --verbs=list --namespaced -o name | grep -v "events" | tr '\n' ',' | sed 's/,$//') -n openebs
 ```
 
-### 各コマンドの説明
+#### 各コマンドの説明
 
 ```bash
 kubectl api-resources --verbs=list --namespaced -o name

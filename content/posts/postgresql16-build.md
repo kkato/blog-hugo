@@ -23,7 +23,7 @@ configureコマンドには以下のオプションを指定しています。
 参考: https://www.postgresql.jp/document/16/html/install-make.html#CONFIGURE-OPTIONS
 
 
-## `icu-uc`, `icu-i18n`のパッケージが見つからない
+### `icu-uc`, `icu-i18n`のパッケージが見つからない
 
 `icu-uc`, `icu-i18n`のパッケージが見つからないと言われました。
 
@@ -61,7 +61,7 @@ echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig"' >> ~/.zshr
 source ~/.zshrc
 ```
 
-## TAPテストに必要なモジュールがインストールされていない
+### TAPテストに必要なモジュールがインストールされていない
 
 TAPテストに必要なPerlのmoduleがインストールされていなかったみたいです。
 
@@ -80,6 +80,6 @@ TAPテストに必要なPerlのmoduleをインストールしました。
 sudo cpan IPC::Run
 ```
 
-## 参考
+### 参考
 - [公式ドキュメント](https://www.postgresql.jp/document/16/html/install-make.html)
 - [PostgreSQL開発コミュニティに参加しよう！](https://www.slideshare.net/slideshow/postgresql-global-development-group-osc2022-online-kyoto-nttdata/252356101)

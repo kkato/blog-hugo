@@ -7,21 +7,21 @@ tags: ["git", "command"]
 
 他の記事でも多数紹介されていますが、最近`ghq`と`peco`を使ってみてとても便利だったので、自身のブログでも紹介します。
 
-## ghqコマンド
+### ghqコマンド
 
 `git clone`で多くのリポジトリをcloneしてると、ホームディレクトリ直下に大量のディレクトリで散らかり、どこに何があるかわからなくなってしまいます。
 `ghq`は、Gitリポジトリをあらかじめ決めたディレクトリにまとめて管理できる便利なツールです。
 
 ー https://github.com/x-motemen/ghq
 
-### インストール方法
+#### インストール方法
 
 ```bash
 # macOSの場合
 brew install ghq
 ```
 
-### 基本的な使い方
+#### 基本的な使い方
 
 ```bash
 # リポジトリをクローンする
@@ -31,20 +31,20 @@ ghq get username/repository
 ghq list
 ```
 
-## pecoコマンド
+### pecoコマンド
 
 `peco`は、CLI上でインタラクティブにテキストを絞り込み・検索できるツールです。
 
 - https://github.com/peco/peco
 
-### インストール方法
+#### インストール方法
 
 ```bash
 # macOSの場合
 brew install peco
 ```
 
-### 基本的な使い方
+#### 基本的な使い方
 
 ```bash
 # ファイルを絞り込み選択
@@ -57,11 +57,11 @@ history | peco
 ps aux | peco
 ```
 
-## ghq + pecoの組み合わせ
+### ghq + pecoの組み合わせ
 
 この2ツールを組み合わせることで、リポジトリの切り替えが格段に楽になります。
 
-### aliasの設定
+#### aliasの設定
 
 以下のaliasを`~/.bashrc`~/.zshrc`に追加します：
 
@@ -70,6 +70,6 @@ ps aux | peco
 alias ghqcd='cd "$(ghq list | peco)"'
 ```
 
-## まとめ
+### まとめ
 
 `ghq`と`peco`を組み合わせることで、リポジトリの切り替えが格段に楽になりました。

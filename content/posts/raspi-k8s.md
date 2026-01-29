@@ -10,7 +10,7 @@ Control Planeノードx1 Workerノードx3の構成です。
 
 ![](/images/raspi-k8s/raspi-cluster.jpg)
 
-## 準備
+### 準備
 
 準備したものは以下のとおりです。
 | アイテム | 個数 |
@@ -27,9 +27,9 @@ Control Planeノードx1 Workerノードx3の構成です。
 
 PoE(Power over Ethernet)+ HATを使うと、LANケーブルから電源供給できるのでとても便利です。今回はPoE+ HATを使っているので、スイッチングハブもPoE対応のものを購入しています。ラズパイのOSをSDカードにインストールする必要があるので、SDカードリーダーも購入しました。あとは、ディスプレイと繋ぐときにmicro HDMIに変換するためのアダプタも購入しました。
 
-## OSの設定
+### OSの設定
 
-### OSのインストール
+#### OSのインストール
 手元のPCはUbuntu 22.04 LTSなので、以下のコマンドでRaspberry Pi Imagerをインストールします。
 ```
 $ sudo apt install rpi-imager
@@ -58,7 +58,7 @@ $ sudo visudo
 kkato ALL=NOPASSWD: ALL
 ```
 
-### 固定IPの設定
+#### 固定IPの設定
 OS側で固定IPを設定する方法もありますが、今回はルーター側で設定してみたいと思います。
 まずは以下のコマンドを使って、MACアドレスを確認します。(以下だと、eth0の`dc:a6:32:70:52:2a`です。)
 ```
@@ -84,13 +84,13 @@ $ arp -an
 ? (192.168.10.1) at 80:22:a7:26:71:5c [ether] on wlp0s20f3
 ```
 
-## kubeadmのインストール
+### kubeadmのインストール
 以下の手順を参考にします。
 - [kubeadmを使用したクラスターの作成](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 - [コンテナランタイム](https://kubernetes.io/ja/docs/setup/production-environment/container-runtimes/)
 - [kubeadmのインストール](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
 
-### ポートの開放
+#### ポートの開放
 kubernetesのコンポーネントが互いに通信するために、[これらのポート](https://kubernetes.io/ja/docs/reference/networking/ports-and-protocols/)を開く必要があります。
 
 ufwコマンドを使って、Control Planeノードのポートを開放します。
@@ -140,7 +140,7 @@ To                         Action      From
 30000:32767/tcp            ALLOW       Anywhere
 ```
 
-### コンテナランタイムのインストール
+#### コンテナランタイムのインストール
 コンテナランタイムとはkubernetesノード上のコンテナとコンテナイメージを管理するためのソフトウェアです。
 
 2023年5月現在では、containeredやCRI-Oなどがコンテナランタイムとしてサポートされています。今回はcontainerdをインストールしようと思います。
@@ -176,7 +176,7 @@ $ sudo sysctl --system
 $ sudo apt install containerd -y
 ```
 
-### kubeadm, kubelet, kubectlのインストール
+#### kubeadm, kubelet, kubectlのインストール
 
 aptのパッケージ一覧を更新し、Kubernetesのaptリポジトリを利用するのに必要なパッケージをインストールします。
 ```sh
@@ -205,13 +205,13 @@ $ sudo apt-get install -y kubelet kubeadm kubectl
 $ sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
-## kubernetesクラスタの作成
+### kubernetesクラスタの作成
 以下の手順を参考にします。
 - [kubeadmを使用したクラスターの作成](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 - [kubectlのインストールおよびセットアップ](https://kubernetes.io/ja/docs/tasks/tools/install-kubectl/)
 
 
-### Control Planeノードのデプロイ
+#### Control Planeノードのデプロイ
 `kubeadm init`コマンドを使ってControl Planeノードをデプロイします。
 
 ```sh
@@ -237,7 +237,7 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
 Then you can join any number of worker nodes by running the following on each as root:
 ```
 
-### アドオンのインストール
+#### アドオンのインストール
 
 CNIプラグインであるFlannelをインストールします。\
 https://github.com/flannel-io/flannel#deploying-flannel-manually
@@ -245,7 +245,7 @@ https://github.com/flannel-io/flannel#deploying-flannel-manually
 $ kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 ```
 
-### Workerノードのデプロイ
+#### Workerノードのデプロイ
 `kubeadm join`コマンドを使って、Workerノードをデプロイします。
 
 ```sh
@@ -254,7 +254,7 @@ $ sudo kubeadm join 10.168.10.111:6443 --token s0px1g.7s2e6kwrj5qaiysr \
 	  --discovery-token-ca-cert-hash sha256:bbcfefdab5e92525d070ff0f7a8de077d72bad39f897193a288486f76462424d
 ```
 
-### kubectlのインストール
+#### kubectlのインストール
 
 kubectlのバイナリをダウンロードします。
 ```sh
@@ -284,7 +284,7 @@ $ echo 'alias k=kubectl' >>~/.bashrc
 $ echo 'complete -F __start_kubectl k' >>~/.bashrc
 ```
 
-### kubeconfigの設定
+#### kubeconfigの設定
 
 kubeadm initコマンド実行後に表示された説明に沿って、kubeconfigを設定します。
 ```sh
@@ -294,7 +294,7 @@ $ scp raspi01:/etc/kubernetes/admin.conf $HOME/.kube/config
 $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-### 接続確認
+#### 接続確認
 k8sクラスタに接続できることを確認します。
 ```sh
 # 手元のPCで実行
@@ -302,5 +302,5 @@ $ k get pods
 No resources found in default namespace.
 ```
 
-## まとめ
+### まとめ
 ラズパイを使ってk8sクラスタを組んでみました。ずっとお家k8sクラスタを構築してみたいと思っていたので、やっと実現できてよかったです。k8sの構築方法を一通り体験したので、これでk8sを完全理解したと言えますね。
