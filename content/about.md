@@ -5,9 +5,9 @@ hidemeta: true
 draft: false
 ---
 
-I am a Site Reliability Engineer with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go. \
+I am an SRE with experience in Kubernetes, PostgreSQL, AWS, Terraform, and Go. \
 I am interested in contributing to OSS. \
-In my free time, I like to go bouldering, cooking, and travelling.
+In my free time, I enjoy bouldering, cooking, and travelling.
 
 ## Experience
 | Period            | Position                          |
