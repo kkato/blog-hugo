@@ -139,13 +139,13 @@ $ sudo kubeadm upgrade node
 [upgrade] Now you should go ahead and upgrade the kubelet package using your package manager.
 ```
 
+### kubeletとkubectlのアップグレード
+
 ノードをメンテナンスモードにして、Podを退避させます。
 
 ```bash
 kubectl drain nuc02 --ignore-daemonsets --delete-emptydir-data
-```
-
-### kubeletとkubectlのアップグレード
+``
 
 kubeletとkubectlをアップグレードします。
 
@@ -159,8 +159,6 @@ kubeletを再起動します。
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 ```
-
-### ノードの復帰
 
 メンテナンスモードを解除して、ノードをスケジューリング対象に戻します。
 
