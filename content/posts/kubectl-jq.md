@@ -9,16 +9,16 @@ jqコマンドとは、JSON形式のデータを処理・変換するための�
 普段はkubectlやAWS CLIと組み合わせて使うことが多いのですが、使い方やオプションをきちんと調べたことがなかったため、本記事の執筆を機に改めておさらいしようと思います。
 この記事では、知っておくと便利な関数やjqコマンドの実践的な組み合わせ例を紹介します。
 
-## インストール方法
+### インストール方法
 
 macOSの場合は以下のコマンドでインストールできます。
 ```bash
 brew install jq
 ```
 
-## jqコマンドの関数
+### jqコマンドの関数
 
-### keys関数
+#### keys関数
 
 これまでは`jq ','`のように全階層をまとめて表示してキーを把握していましたが、keys関数を使うと一階層ずつキーを表示できます。
 
@@ -27,7 +27,7 @@ brew install jq
 kubectl get pod my-pod -o json | jq '.metadata.labels | keys'
 ```
 
-### select関数
+#### select関数
 
 select関数は条件にマッチした項目のみを抽出します。
 
@@ -44,7 +44,7 @@ kubectl get pods -A -o json | jq -r '.items[] | select(.status.phase != "Running
 - `"\(filter)"`: 文字列の中で `\(filter)` を使うことで、抽出した値を文字列に埋め込める。これにより、複数の値を空白区切りで1行に表示できる
 - `columnt -t`: columnコマンドの`-t`オプションを使うことで、区切り文字を基準に列を揃えて表形式で表示できます
 
-### contains関数
+#### contains関数
 
 contains関数は指定した文字列が含まれていればtrueを返します。
 
@@ -53,7 +53,7 @@ contains関数は指定した文字列が含まれていればtrueを返しま�
 kubectl get pods -o json | jq '.items[] | select(.spec.containers[].name | contains("gcr.io")) | .metadata.name'
 ```
 
-## まとめ
+### まとめ
 
 kubectl と jq の組み合わせは業務でよく使っていたものの、正直ちゃんと理解できていなかった部分も多かったので、今回あらためて整理できてよかったです。
 特に keys や select、contains などの関数を使うと、複雑な JSON から必要な情報をサクッと抜き出せるのが本当に便利だなと再認識しました。

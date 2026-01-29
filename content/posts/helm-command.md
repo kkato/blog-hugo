@@ -8,53 +8,53 @@ tags: ["kubernetes", "command"]
 HelmはKubernetes向けのパッケージマネージャーで、複雑なアプリケーションのデプロイを簡単にしてくれるツールです。
 Helmコマンドをよく忘れてしまうので、基本的なコマンドを備忘録としてまとめました。
 
-## インストール方法
+### インストール方法
 
 macOSの場合は以下のコマンドでインストールできます。
 ```bash
 brew install helm
 ```
 
-## リポジトリ管理
+### リポジトリ管理
 
-### リポジトリの追加
+#### リポジトリの追加
 ```bash
 # リポジトリを追加する
 helm repo add stable https://charts.helm.sh/stable
 helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
-### リポジトリの一覧表示
+#### リポジトリの一覧表示
 ```bash
 # 追加されているリポジトリを確認する
 helm repo list
 ```
 
-### リポジトリの更新
+#### リポジトリの更新
 ```bash
 # リポジトリのインデックスを更新する（新しいチャートバージョンを取得）
 helm repo update
 ```
 
-## チャートの検索・確認
+### チャートの検索・確認
 
-### チャートの検索
+#### チャートの検索
 ```bash
 # リポジトリからチャートを検索する
 helm search repo nginx
 helm search repo mysql
 ```
 
-### チャート情報の表示
+#### チャート情報の表示
 ```bash
 # チャートの詳細情報を表示する
 helm show chart bitnami/nginx
 helm show values bitnami/nginx
 ```
 
-## リリース管理
+### リリース管理
 
-### インストール
+#### インストール
 ```bash
 # チャートをインストールする
 helm install my-nginx bitnami/nginx
@@ -66,7 +66,7 @@ helm install my-nginx bitnami/nginx -n production --create-namespace
 helm install my-nginx bitnami/nginx --set service.type=LoadBalancer
 ```
 
-### リリース一覧の表示
+#### リリース一覧の表示
 ```bash
 # インストール済みのリリースを表示する
 helm list
@@ -78,7 +78,7 @@ helm list -A
 helm list -n production
 ```
 
-### リリース情報の確認
+#### リリース情報の確認
 ```bash
 # リリースの詳細情報を表示する
 helm get all my-nginx
@@ -90,7 +90,7 @@ helm get values my-nginx
 helm history my-nginx
 ```
 
-### アップグレード
+#### アップグレード
 ```bash
 # リリースをアップグレードする
 helm upgrade my-nginx bitnami/nginx
@@ -99,7 +99,7 @@ helm upgrade my-nginx bitnami/nginx
 helm upgrade my-nginx bitnami/nginx --set image.tag=1.21.0
 ```
 
-### ロールバック
+#### ロールバック
 ```bash
 # 前のバージョンにロールバックする
 helm rollback my-nginx
@@ -108,7 +108,7 @@ helm rollback my-nginx
 helm rollback my-nginx 2
 ```
 
-### アンインストール
+#### アンインストール
 ```bash
 # リリースを削除する
 helm uninstall my-nginx
@@ -117,16 +117,16 @@ helm uninstall my-nginx
 helm uninstall my-nginx -n production
 ```
 
-## 便利なオプション
+### 便利なオプション
 
-### ドライラン
+#### ドライラン
 実際にはインストールせずに、何が実行されるかを確認できます。
 ```bash
 helm install my-nginx bitnami/nginx --dry-run --debug
 helm upgrade my-nginx bitnami/nginx --dry-run --debug
 ```
 
-### テンプレートの確認
+#### テンプレートの確認
 ```bash
 # 生成されるKubernetesマニフェストを確認する
 helm template my-nginx bitnami/nginx

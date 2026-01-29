@@ -7,7 +7,7 @@ draft: false
 手動での依存パッケージのアップデートが大変だったので、[Renovate](https://docs.renovatebot.com/)を導入してみました。
 その手順と設定について簡単にメモします。
 
-## Renovateとは？
+### Renovateとは？
 
 Renovateは、依存関係の更新を自動化してくれるOSSのツールです。元々は個人開発から始まり、現在はイスラエルのセキュリティ企業 Mend社によって開発されています。
 
@@ -16,7 +16,7 @@ Node.jsのnpmやyarnはもちろん、Go modules、Docker、Terraformなど多�
 
 対応しているパッケージマネージャーの一覧は[こちら](https://docs.renovatebot.com/modules/manager/#supported-managers)
 
-## 導入手順
+### 導入手順
 
 renovateはセルフホストする方法とGitHub Appを使う方法の2通りあります。手軽に使いたいので、今回はGitHub Appを使って導入します。
 
@@ -47,12 +47,12 @@ renovateはセルフホストする方法とGitHub Appを使う方法の2通り�
 }
 ```
 
-### `$schema`
+#### `$schema`
 
 Renovateにおける`$schema`は、`renovate.json`で使える設定項目やその値の種類・ルールを定義しています。
 これにより、どの設定が有効かをエディタが理解できたり、エディタによる補完などが有効になったりします。
 
-### `extends`
+#### `extends`
 
 `extends`では、Renovateがあらかじめ用意しているルールセットを指定することができます。
 上記の例では`config:recommended`を指定しています。これには、どの言語やプロジェクトでも使える推奨設定が含まれています。
@@ -61,6 +61,6 @@ Renovateにおける`$schema`は、`renovate.json`で使える設定項目やそ
 config:recommended の詳細については[こちら](https://docs.renovatebot.com/presets-config/#configrecommended) \
 またその他設定項目については[こちら](https://docs.renovatebot.com/configuration-options/)
 
-## まとめ
+### まとめ
 
 現在業務でRenovate を使ってみて感じたのは、カスタマイズ性が非常に高い反面、設定項目が多くてややとっつきにくいという点でした。しかし、プライベートの時間を使って軽く触ってみたところ、導入自体は驚くほど簡単で、いい意味で期待を裏切られました。最小限の設定でもすぐに使い始めることができましたが、もう少しドキュメントを読んで複雑な設定も試してみたいと思いました。

@@ -9,7 +9,7 @@ Kubernetes上でAlertmanagerがちゃんと通知できるか、どんな内容�
 
 なので、今回はwebhookの機能を使ってNginxにリクエストを飛ばし、リクエストの内容をログから確認してみようと思います。
 
-## webhookとは?
+### webhookとは?
 Alertmanagerのreceiverには以下が指定できます。
 - Email
 - [Opesgenie](https://www.atlassian.com/software/opsgenie)
@@ -34,7 +34,7 @@ receivers:
   - url: 'http://nginx-svc.default:8080/'
 ```
 
-## webhookの連携先としてnginxを使う
+### webhookの連携先としてnginxを使う
 今回はwebhookの連携先としてnginxを使用します。
 
 nginxを使って実現したいことは以下のとおりです。
@@ -260,5 +260,5 @@ $ k logs nginx-6dcc55fd49-7kbpd
 }
 ```
 
-## まとめ
+### まとめ
 Alertmanagerのwebhookをnginxに連携して、アラートの内容をログから確認できるようにしてみました。
