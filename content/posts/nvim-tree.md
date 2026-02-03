@@ -1,7 +1,7 @@
 ---
 title: "nvim-treeの操作コマンド"
 date: 2026-02-01T17:25:44+09:00
-draft: true
+draft: false
 categories: ["command"]
 ---
 
