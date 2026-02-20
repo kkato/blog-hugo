@@ -31,7 +31,7 @@ helm plugin install https://github.com/databus23/helm-diff
 
 今回は以下のようなディレクトリ構成で管理します。
 
-```
+```text
 addons/
 ├── helmfile.yaml
 └── argocd/
