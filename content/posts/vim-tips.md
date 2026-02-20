@@ -1,5 +1,5 @@
 ---
-title: "Vim Tips"
+title: "vim tips"
 date: 2026-02-01T17:39:47+09:00
 draft: false
 ---
