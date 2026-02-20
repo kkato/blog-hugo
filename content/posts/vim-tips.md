@@ -4,7 +4,7 @@ date: 2026-02-01T17:39:47+09:00
 draft: false
 ---
 
-## 移動
+### 移動
 
 | キー | 説明 |
 |------|------|
@@ -12,7 +12,7 @@ draft: false
 | `%` | 対応する括弧へ移動 |
 | `*` / `#` | カーソル下の単語で前方/後方検索 |
 
-## Operator と Text Object
+### Operator と Text Object
 
 | Operator | 説明 |
 |----------|------|
@@ -42,6 +42,6 @@ Text Object は `i`（inner: 内側のみ）と `a`（a: 囲み文字も含む�
 | `di"` | ダブルクォート内を削除 |
 | `ya(` | 括弧ごとコピー |
 
-## 参考文献
+### 参考文献
 
 - [なれる! Vimmer](https://gist.github.com/fohte/f99aab472119acd736dfc688bfdf383c)
