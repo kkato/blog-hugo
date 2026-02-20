@@ -2,7 +2,7 @@
 title: "Helmコマンド まとめ"
 date: 2025-12-27T09:37:48+09:00
 draft: false
-tags: ["kubernetes", "command"]
+tags: ["kubernetes", "helm"]
 ---
 
 HelmはKubernetes向けのパッケージマネージャーで、複雑なアプリケーションのデプロイを簡単にしてくれるツールです。
