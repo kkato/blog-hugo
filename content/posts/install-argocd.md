@@ -2,7 +2,7 @@
 title: "Argo CDをインストールしてGitOpsを始める"
 date: 2026-02-20T11:00:00+09:00
 draft: false
-tags: ["kubernetes", "argocd", "helm", "gitops"]
+tags: ["kubernetes", "argocd", "helm"]
 ---
 
 Argo CDはKubernetes向けのGitOpsツールで、Gitリポジトリに置いたマニフェストをクラスタに自動で反映してくれます。
