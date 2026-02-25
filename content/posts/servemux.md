@@ -7,9 +7,7 @@ tags: ["go"]
 
 自然言語でも日本語という母語があるように、プログラミングでも自分の母語と呼べる言語を持ちたいと考え、最近はGoを本腰入れて勉強しています。その中で HTTP サーバーを実装しようとした際、Gin・Echo・chi など多くの選択肢があり、どのフレームワーク（ライブラリ）を選ぶべきか迷いました。
 
-そんな中、Go 1.22（2024年2月リリース）から標準ライブラリの`http.ServeMux`が強化されたことを知りました。
-この改善により、多くのケースでサードパーティのライブラリが不要になっています。
-この記事では、Go 1.22で追加されたServeMuxの新機能について、実例を交えながら解説します。
+そんな中、Go 1.22（2024年2月リリース）から標準ライブラリの`http.ServeMux`が強化されたことを知りました。今回は、Go 1.22でのServeMuxの改善点についてまとめてみたいと思います。
 
 ### これまでのServeMux（Go 1.21以前）の課題
 
@@ -216,5 +214,4 @@ Go 1.22のServeMux改善により、以下のことが標準ライブラリだ�
 ### 参考資料
 
 - [Routing Enhancements for Go 1.22 - The Go Programming Language](https://go.dev/blog/routing-enhancements)
-- [Better HTTP server routing in Go 1.22 - Eli Bendersky's website](https://eli.thegreenplace.net/2023/better-http-server-routing-in-go-122/)
-- [The proposal to enhance Go's HTTP router](https://benhoyt.com/writings/go-servemux-enhancements/)
+- [Go1.22 リリース連載 HTTPルーティングの強化](https://future-architect.github.io/articles/20240202a/)
