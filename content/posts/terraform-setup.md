@@ -1,8 +1,8 @@
 ---
-title: "tfactionでMonolith Terraformリポジトリをセットアップする"
+title: "tfactionでTerraformリポジトリをセットアップする"
 date: 2026-02-25T12:00:00+09:00
 draft: true
-tags: ["terraform", "tfaction", "gcp", "github-actions"]
+tags: ["terraform", "github-actions"]
 ---
 
 [tfaction](https://github.com/suzuki-shunsuke/tfaction)はGitHub Actions上でTerraformのCI/CDを構築するためのアクション群です。

@@ -1,19 +1,12 @@
 ---
 title: "Cloudflare Tunnelを使っておうちk8sクラスタにアクセスする"
-date: 2025-06-22T15:27:12+09:00
+date: 2026-02-26T13:27:12+09:00
 draft: true
 tags: ["kubernetes", "cloudflare", "argocd"]
 ---
 
 Cloudflare Tunnelを使うと、パブリックIPやポート開放なしにKubernetesクラスタ上のサービスをインターネットに公開できます。
 今回はCloudflare Tunnelの作成から、cloudflare-tunnel-ingress-controllerを使ってKubernetesのIngressリソースで自動的にトンネル経由の公開を行う設定までをまとめました。
-
-### 前提
-
-- Kubernetesクラスタが構築済みであること
-- Argo CDが導入済みであること（[Argo CDのインストール記事](/posts/install-argocd/)を参照）
-- External Secrets Operatorが導入済みであること
-- Cloudflareにドメインが登録済みであること
 
 ### Cloudflare Tunnelの仕組み
 

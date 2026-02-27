@@ -8,14 +8,6 @@ tags: ["kubernetes", "helm"]
 HelmはKubernetes向けのパッケージマネージャーで、複雑なアプリケーションのデプロイを簡単にしてくれるツールです。
 Helmコマンドをよく忘れてしまうので、基本的なコマンドを備忘録としてまとめました。
 
-### インストール方法
-
-macOSの場合は以下のコマンドでインストールできます。
-```bash
-brew install helm
-```
-
-### リポジトリ管理
 
 #### リポジトリの追加
 ```bash
@@ -36,8 +28,6 @@ helm repo list
 helm repo update
 ```
 
-### チャートの検索・確認
-
 #### チャートの検索
 ```bash
 # リポジトリからチャートを検索する
@@ -51,8 +41,6 @@ helm search repo mysql
 helm show chart bitnami/nginx
 helm show values bitnami/nginx
 ```
-
-### リリース管理
 
 #### インストール
 ```bash
@@ -116,8 +104,6 @@ helm uninstall my-nginx
 # 名前空間を指定して削除
 helm uninstall my-nginx -n production
 ```
-
-### 便利なオプション
 
 #### ドライラン
 実際にはインストールせずに、何が実行されるかを確認できます。

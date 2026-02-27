@@ -1,17 +1,12 @@
 ---
-title: "Argo CDをインストールしてGitOpsを始める"
+title: "Argo CDをインストールしてみた"
 date: 2026-02-20T11:00:00+09:00
 draft: false
 tags: ["kubernetes", "argocd", "helm"]
 ---
 
 Argo CDはKubernetes向けのGitOpsツールで、Gitリポジトリに置いたマニフェストをクラスタに自動で反映してくれます。
-今回はHelmを使ってArgo CDをインストールし、リポジトリの接続からApplicationの作成までをまとめました。
-
-### 前提
-
-- Kubernetesクラスタが構築済みであること
-- Helmがインストール済みであること
+今回はHelmを使ってArgo CDをインストールし、リポジトリの接続からApplicationの作成までを試してみました。
 
 ### Argo CDのインストール
 
@@ -37,12 +32,6 @@ Podが正常に起動していることを確認します。
 kubectl get pods -n argocd
 ```
 
-### Argo CD CLIのインストール
-
-```bash
-brew install argocd
-```
-
 ### Argo CD UIにアクセスする
 
 port-forwardでArgo CDのUIにアクセスできます。
@@ -56,8 +45,10 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 初期パスワードは以下のコマンドで取得できます。ユーザー名は`admin`です。
 
 ```bash
-argocd admin initial-password -n argocd
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
+
+![](/images/argocd/login.png)
 
 ### Gitリポジトリを接続する
 
@@ -78,6 +69,8 @@ ssh-keygen -t ed25519 -f ~/.ssh/argocd -C "argocd" -N ""
 ```bash
 gh repo deploy-key add ~/.ssh/argocd.pub --repo <user>/<repo> --title "argocd"
 ```
+
+![](/images/argocd/ssh-key.png)
 
 #### Argo CDにSSH鍵を登録
 
@@ -103,17 +96,17 @@ Gitリポジトリに置いたKubernetesマニフェストをそのまま同期�
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: recipe-api
+  name: test-app
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: git@github.com:<user>/<repo>
     targetRevision: main
-    path: apps/recipe-api
+    path: apps/test-app
   destination:
     server: https://kubernetes.default.svc
-    namespace: recipe-api
+    namespace: test-app
   syncPolicy:
     automated:
       prune: true
@@ -168,7 +161,7 @@ spec:
 作成したApplicationをクラスタに適用します。
 
 ```bash
-kubectl apply -f argocd/apps/recipe-api.yaml
+kubectl apply -f argocd/apps/test-app.yaml
 kubectl apply -f argocd/addons/argocd.yaml
 ```
 
@@ -181,14 +174,14 @@ Argo CDでGitOps運用する場合、以下のようなリポジトリ構成が�
 ```text
 k8s/
 ├── apps/              # 自作アプリ (素のK8sマニフェスト)
-│   └── recipe-api/
+│   └── test-app/
 │       └── deployment.yaml
 ├── addons/            # クラスタaddon (Helm values)
 │   └── argocd/
 │       └── values.yaml
 └── argocd/            # Argo CD Application定義
     ├── apps/
-    │   └── recipe-api.yaml
+    │   └── test-app.yaml
     └── addons/
         └── argocd.yaml
 ```
