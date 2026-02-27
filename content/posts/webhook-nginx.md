@@ -27,7 +27,7 @@ Webhookとは特定のエンドポイントに対してHTTP POSTリクエスト�
 外部サービスではないので、自分自身でエンドポイントを用意し、自分自身で後続の処理を実装する必要があります。
 
 例えば、以下のように設定します。
-```
+```yaml
 receivers:
 - name: "nginx"
   webhook_configs:
@@ -50,7 +50,7 @@ nginx.confの初期設定をベースにしていますが、そのままだと�
 
 http://nginx.org/en/docs/http/ngx_http_core_module.html#var_request_body
 
-```
+```nginx
 user  nginx;
 worker_processes  auto;
 

@@ -31,12 +31,12 @@ PoE(Power over Ethernet)+ HATを使うと、LANケーブルから電源供給で
 
 #### OSのインストール
 手元のPCはUbuntu 22.04 LTSなので、以下のコマンドでRaspberry Pi Imagerをインストールします。
-```
+```bash
 $ sudo apt install rpi-imager
 ```
 
 そして、microSDカード4枚全てにUbuntu Server 22.10 (64-bit)を焼きます。
-```
+```bash
 $ rpi-imager
 ```
 ![](/images/raspi-k8s/raspi-imager.png)
@@ -61,7 +61,7 @@ kkato ALL=NOPASSWD: ALL
 #### 固定IPの設定
 OS側で固定IPを設定する方法もありますが、今回はルーター側で設定してみたいと思います。
 まずは以下のコマンドを使って、MACアドレスを確認します。(以下だと、eth0の`dc:a6:32:70:52:2a`です。)
-```
+```bash
 $ ip link
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
