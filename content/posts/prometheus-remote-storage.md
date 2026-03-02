@@ -1,8 +1,8 @@
 ---
 title: "Prometheusリモートストレージの比較 (Thanos / Cortex / Mimir)"
-date: 2026-02-28T12:00:00+09:00
-draft: false
-tags: ["kubernetes", "prometheus", "observability"]
+date: 2026-03-02T12:00:00+09:00
+draft: true
+tags: ["kubernetes", "prometheus"]
 ---
 
 Prometheusはデフォルトでローカルディスクにメトリクスを保存しますが、長期保存やHA構成を実現するためにリモートストレージが必要になります。代表的な選択肢としてThanos・Cortex・Mimirの3つがあり、業務で検討する機会があったので比較してまとめました。
@@ -30,7 +30,7 @@ Prometheusはデフォルトでローカルディスクにメトリクスを保�
 
 コミュニティ主導でCNCF Incubatingプロジェクトになっています。最大の特徴は **Sidecarパターン** で、既存のPrometheusに手を加えずに横に並べる形でデプロイできます。PrometheusがローカルのTSDBブロックをフラッシュするタイミング（2時間ごと）でSidecarがオブジェクトストレージにアップロードし、Store GatewayとQueryerで過去データを参照できるようにする仕組みです。
 
-```
+```text
 Prometheus + Sidecar  →  オブジェクトストレージ
                                ↑
                         Store Gateway
