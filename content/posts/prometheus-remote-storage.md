@@ -1,5 +1,5 @@
 ---
-title: "Prometheusリモートストレージの比較 (Thanos / Cortex / Mimir)"
+title: "Prometheusリモートストレージの比較"
 date: 2026-03-02T12:00:00+09:00
 draft: true
 tags: ["kubernetes", "prometheus"]

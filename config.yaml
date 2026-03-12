@@ -96,6 +96,8 @@ params:
       url: "https://www.linkedin.com/in/ken-kato/"
     - name: x
       url: "https://twitter.com/kkato25"
+    - name: link
+      url: "https://kkato.github.io/"
 
   cover:
     hidden: true # hide everywhere but not in structured data
@@ -126,10 +128,6 @@ menu:
       name: Search
       url: /search/
       weight: 30
-    - identifier: about
-      name: About
-      url: /about/
-      weight: 40
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
 markup:
