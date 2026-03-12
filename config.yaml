@@ -88,6 +88,8 @@ params:
     Welcome to my website!"
 
   socialIcons:
+    - name: link
+      url: "https://kkato.github.io/"
     - name: github
       url: "https://github.com/kkato/"
     - name: wantedly
@@ -96,8 +98,6 @@ params:
       url: "https://www.linkedin.com/in/ken-kato/"
     - name: x
       url: "https://twitter.com/kkato25"
-    - name: link
-      url: "https://kkato.github.io/"
 
   cover:
     hidden: true # hide everywhere but not in structured data
