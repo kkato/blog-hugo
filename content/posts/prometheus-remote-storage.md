@@ -28,14 +28,22 @@ Prometheusはデフォルトでローカルディスクにメトリクスを保�
 
 #### Thanos
 
-コミュニティ主導でCNCF Incubatingプロジェクトになっています。最大の特徴は **Sidecarパターン** で、既存のPrometheusに手を加えずに横に並べる形でデプロイできます。PrometheusがローカルのTSDBブロックをフラッシュするタイミング（2時間ごと）でSidecarがオブジェクトストレージにアップロードし、Store GatewayとQueryerで過去データを参照できるようにする仕組みです。
+コミュニティ主導でCNCF Incubatingプロジェクトになっています。最大の特徴はSidecarパターンで、既存のPrometheusに手を加えずに横に並べる形でデプロイできます。
 
-```text
-Prometheus + Sidecar  →  オブジェクトストレージ
-                               ↑
-                        Store Gateway
-                               ↑
-                            Querier  ←  Grafana
+各コンポーネントの役割:
+
+- Sidecar: PrometheusのPodに並べてデプロイするコンテナ。PrometheusがローカルにTSDBブロックをフラッシュするタイミング（2時間ごと）でオブジェクトストレージにアップロードします
+- Store Gateway: オブジェクトストレージ上の過去データを読み出し、クエリに応答するコンポーネント
+- Querier: PromQL互換のクエリエンドポイント。SidecarやStore Gatewayに問い合わせて結果を集約し、Grafanaに返します
+- Compactor: オブジェクトストレージ上のブロックをダウンサンプリング・コンパクションするバックグラウンドプロセス
+
+```mermaid
+graph LR
+    A[Prometheus + Sidecar] -->|アップロード| B[オブジェクトストレージ]
+    B --> C[Store Gateway]
+    B --> D[Compactor]
+    C --> E[Querier]
+    E --> F[Grafana]
 ```
 
 ダウンサンプリング（5分・1時間粒度）をCompactorがネイティブでサポートしているため、数年分の長期データを扱う場合でも高速にクエリできます。マルチテナントはReceiverコンポーネント経由で実現できますが、CortexやMimirと比較すると後付けの印象が強いです。
@@ -46,19 +54,29 @@ Prometheus + Sidecar  →  オブジェクトストレージ
 
 Weaveworksが開発を始め、現在はCNCF Incubatingプロジェクトとして継続しています。マルチテナントとスケーラビリティを最初から設計に組み込んだマイクロサービスアーキテクチャが特徴で、Prometheusからの `remote_write` でデータを受け取ります。
 
-テナントの識別は `X-Scope-OrgID` ヘッダーで行い、Distributor→Ingester→オブジェクトストレージという流れでデータが書き込まれます。GrafanaクラウドはもともとCortexで動いていました。
+各コンポーネントの役割:
+
+- Distributor: `remote_write` リクエストを受け取り、複数のIngesterに振り分けるコンポーネント。どのテナントのデータかは `X-Scope-OrgID` リクエストヘッダーで識別します
+- Ingester: 受け取ったメトリクスを一時的にメモリに保持し、定期的にオブジェクトストレージへ書き出すコンポーネント
+- Querier: PromQLクエリを処理するコンポーネント。IngesterとオブジェクトストレージからデータをフェッチしてGrafanaに返します
+
+```mermaid
+graph LR
+    A[Prometheus] -->|remote_write| B[Distributor]
+    B --> C[Ingester]
+    C --> D[オブジェクトストレージ]
+    D --> E[Querier]
+    C --> E
+    E --> F[Grafana]
+```
+
+GrafanaクラウドはもともとCortexで動いていました。
 
 ただし、2022年3月にGrafana LabsがMimirを公開して以降、CortexへのGrafana Labsの貢献はほぼ停止しています。新規プロジェクトでマイクロサービス型を選ぶ場合は、後継にあたるMimirを選ぶほうが無難です。CortexからMimirへの移行ガイドも公式で提供されており、多くの構成で10分以内に移行できると案内されています。
 
 #### Grafana Mimir
 
 Grafana Labsが2022年にCortexをフォークして公開したプロジェクトです。Cortexから不要な機能を削ぎ落とし、設定パラメータを大幅に整理した上でいくつかの大きな改善を加えています。3つの中で最も活発に開発されており、Grafana Cloud MetricsやGrafana Enterprise Metrics (GEM)の基盤として実際に使われています。
-
-主な改善点:
-
-- **Split-and-merge Compactor**: Cortexのコンパクターが抱えていたTSDBインデックスのサイズ制限（64GB）を回避するために、ブロックをシャードに分割して並列コンパクションし、マージする仕組みを導入
-- **Mimir Query Engine (MQE)**: Mimir 3.0 (2025年11月) で追加されたクエリエンジン。クエリ結果をストリーミングで処理するため、メモリ使用量を最大92%削減できると発表されています
-- **Kafkaベースのイングレストバッファ**: Mimir 3.0で追加。書き込みパスと読み取りパスを独立してスケールできるようになりました
 
 スター数はThanos・Cortexより少ないですが、新しいプロジェクトであることを考えると妥当な数字です。1テナントあたり10億アクティブ系列での動作実績があり、スケーラビリティは3つの中で最も高いとされています。
 
@@ -70,7 +88,6 @@ Grafana Labsが2022年にCortexをフォークして公開したプロジェク�
 
 ### 参考
 
-- [Thanos - Highly available Prometheus setup with long term storage](https://thanos.io/)
-- [Cortex - Horizontally scalable, highly available Prometheus](https://cortexmetrics.io/)
-- [Grafana Mimir documentation](https://grafana.com/docs/mimir/latest/)
-- [Grafana Mimir 3.0 release notes](https://grafana.com/blog/grafana-mimir-3-0-release-all-the-latest-updates/)
+- [Thanos 公式サイト](https://thanos.io/)
+- [Cortex 公式サイト](https://cortexmetrics.io/)
+- [Grafana Mimir 公式ドキュメント](https://grafana.com/docs/mimir/latest/)
