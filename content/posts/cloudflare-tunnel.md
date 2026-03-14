@@ -1,7 +1,7 @@
 ---
 title: "Cloudflare Tunnelを使っておうちk8sクラスタにアクセスする"
 date: 2026-03-01T13:27:12+09:00
-draft: true
+draft: false
 tags: ["kubernetes", "cloudflare", "argocd"]
 ---
 
