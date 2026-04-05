@@ -159,7 +159,24 @@ if (listen(server_fd, 5) != 0) {
 struct sockaddr_in client_addr;
 int client_addr_len = sizeof(client_addr);
 
-accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
+int client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
+```
+
+#### ssize_t send(int sockfd, const void *buf, size_t len, int flags)
+
+接続中のソケットにデータを送信します。戻り値は実際に送信できたバイト数で、失敗時は `-1` を返します。
+
+| 引数 | 説明 |
+|------|------|
+| `sockfd` | `accept()` で取得したクライアントのファイルディスクリプタ |
+| `buf` | 送信するデータへのポインタ |
+| `len` | 送信するデータのバイト数 |
+| `flags` | 送信オプション。通常は `0` を指定する |
+
+```c
+const char *response = "+PONG\r\n";
+send(client_fd, response, strlen(response), 0);
+// +PONG\r\n は Redis プロトコル（RESP）における単純文字列レスポンス
 ```
 
 ### まとめ
