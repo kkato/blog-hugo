@@ -160,6 +160,11 @@ struct sockaddr_in client_addr;
 int client_addr_len = sizeof(client_addr);
 
 int client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
+if (client_fd == -1) {
+    printf("Accept failed: %s\n", strerror(errno));
+    close(server_fd);
+    return 1;
+}
 ```
 
 #### ssize_t send(int sockfd, const void *buf, size_t len, int flags)
@@ -174,9 +179,13 @@ int client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_
 | `flags` | 送信オプション。通常は `0` を指定する |
 
 ```c
-const char *response = "+PONG\r\n";
-send(client_fd, response, strlen(response), 0);
-// +PONG\r\n は Redis プロトコル（RESP）における単純文字列レスポンス
+const char *response = "+PONG\r\n"; // Redis プロトコル（RESP）における単純文字列レスポンス
+if (send(client_fd, response, strlen(response), 0) == -1) {
+    printf("Send failed: %s\n", strerror(errno));
+}
+
+close(client_fd);
+close(server_fd);
 ```
 
 ### まとめ
