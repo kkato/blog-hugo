@@ -167,6 +167,26 @@ if (client_fd == -1) {
 }
 ```
 
+#### ssize_t read(int fd, void *buf, size_t count)
+
+ファイルディスクリプタからデータを読み込みます。戻り値は実際に読み込んだバイト数で、接続が閉じられた場合は `0`、失敗時は `-1` を返します。
+
+| 引数 | 説明 |
+|------|------|
+| `fd` | 読み込み元のファイルディスクリプタ |
+| `buf` | 読み込んだデータを格納するバッファへのポインタ |
+| `count` | 読み込む最大バイト数 |
+
+```c
+char buf[1024];
+ssize_t bytes_read = read(client_fd, buf, sizeof(buf));
+if (bytes_read == -1) {
+    printf("Read failed: %s\n", strerror(errno));
+} else if (bytes_read == 0) {
+    printf("Client disconnected\n"); // 接続が閉じられた
+}
+```
+
 #### ssize_t send(int sockfd, const void *buf, size_t len, int flags)
 
 接続中のソケットにデータを送信します。戻り値は実際に送信できたバイト数で、失敗時は `-1` を返します。
