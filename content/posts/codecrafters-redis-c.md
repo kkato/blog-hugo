@@ -14,10 +14,10 @@ CodeCrafters は HTTP サーバーやシェルなどを車輪の再発明する�
 ```mermaid
 flowchart TD
     A["socket()\nソケットを作成してファイルディスクリプタを取得"]
-    B["setsockopt()\nソケットのオプションを設定（SO_REUSEADDR など）"]
+    B["setsockopt()\nソケットのオプションを設定"]
     C["bind()\nソケットに IP アドレスとポート番号を紐づける"]
     D["listen()\n接続待ち状態にする"]
-    E["accept()\nクライアントからの接続を受け付ける（ブロッキング）"]
+    E["accept()\nクライアントからの接続を受け付ける"]
     F["read / write\nクライアントとデータをやりとりする"]
 
     A --> B --> C --> D --> E --> F
@@ -68,9 +68,9 @@ if (server_fd == -1) {
 
 | 引数 | 代表的な値 | 意味 |
 |------|-----------|------|
-| domain | `AF_INET` | IPv4 |
-| type | `SOCK_STREAM` | TCP |
-| protocol | `0` | 自動 |
+| `domain` | `AF_INET` | IPv4 |
+| `type` | `SOCK_STREAM` | TCP |
+| `protocol` | `0` | 自動 |
 
 #### int setsockopt(int sockfd, int level, int optname, const void *optval, socklen_t optlen)
 
