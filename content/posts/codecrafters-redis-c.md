@@ -208,6 +208,74 @@ close(client_fd);
 close(server_fd);
 ```
 
+#### void *malloc(size_t size)
+
+ヒープ領域にメモリを動的確保し、そのポインタを返します。失敗時は `NULL` を返します。確保したメモリは `free()` で明示的に解放する必要があります。
+
+`accept()` で取得した `client_fd` をスレッドに渡すために使います。
+
+```c
+int *client_fd = malloc(sizeof(int));
+if (!client_fd) {
+    printf("malloc failed\n");
+    continue;
+}
+*client_fd = accept(server_fd, ...);
+```
+
+スタック変数（`int client_fd`）をそのままスレッドに渡してしまうと、次のループで値が上書きされてしまいます。ヒープに確保することで、スレッドが参照し終わるまで値が保持されます。スレッド側（`handle_client`）の先頭で `free()` して解放します。
+
+```c
+void *handle_client(void *arg) {
+    int client_fd = *(int *)arg;
+    free(arg); // ここで解放
+    ...
+}
+```
+
+#### pthread
+
+`<pthread.h>` で提供される POSIX スレッドのAPIです。Redis の実装では複数のクライアントを同時に処理するために使います。
+
+**pthread_create**
+
+```c
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+                   void *(*start_routine)(void *), void *arg);
+```
+
+新しいスレッドを作成します。
+
+| 引数 | 説明 |
+|------|------|
+| `thread` | 作成されたスレッドのIDが格納される |
+| `attr` | スレッドの属性。通常は `NULL`（デフォルト設定） |
+| `start_routine` | スレッドが実行する関数へのポインタ |
+| `arg` | `start_routine` に渡す引数 |
+
+```c
+pthread_t thread;
+if (pthread_create(&thread, NULL, handle_client, client_fd) != 0) {
+    printf("Thread creation failed: %s\n", strerror(errno));
+    close(*client_fd);
+    free(client_fd);
+    continue;
+}
+```
+
+**pthread_detach**
+
+```c
+int pthread_detach(pthread_t thread);
+```
+
+スレッドを切り離し、終了時にリソースが自動で解放されるようにします。`pthread_join()` を呼び出す必要がなくなります。クライアント処理のように「終わったら捨てる」スレッドに適しています。
+
+```c
+pthread_detach(thread);
+// 以降は thread の終了を待たずにループを続ける
+```
+
 ### まとめ
 
 CodeCrafters だと、教科書で読むだけでは掴みにくいソケットの使い方が実際に手を動かして理解できるのでおすすめです。
