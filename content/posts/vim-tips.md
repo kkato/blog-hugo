@@ -41,6 +41,6 @@ Text Object は `i`（inner: 内側のみ）と `a`（a: 囲み文字も含む�
 | `di"` | ダブルクォート内を削除 |
 | `ya(` | 括弧ごとコピー |
 
-### 参考文献
+### 参考
 
 - [なれる! Vimmer](https://gist.github.com/fohte/f99aab472119acd736dfc688bfdf383c)
