@@ -1,68 +1,13 @@
 ---
-title: "データベースのインデックスを理解する"
+title: "LSM-tree を理解する"
 date: 2026-05-03T17:39:53+09:00
 draft: true
-tags: ["database", "index"]
+tags: ["database"]
 ---
 
-最近 Build Your Own Database From Scratch in Go という本を読んでいるのですが、B-tree や LSM-tree まわりの説明がいまいち理解できなかったので、他の文献も参考にしつつ自分なりにまとめてみました。
+最近 Build Your Own Database From Scratch in Go という本を読んでいるのですが、LSM-tree まわりの説明がいまいち理解できなかったので、他の文献も参考にしつつ自分なりにまとめてみました。
 
-代表的なインデックスである以下の2つについて調べてみました。
-
-- B-tree / B+tree
-- LSM-tree
-
-### B-tree
-
-B-tree は各ノードが複数のキーと子へのポインタを持つ balanced tree です。ノードあたりのキーを増やせるので木の高さが低くなり、ディスクからの読み込み回数を抑えられます。
-
-内部ノードの中身は「ポインタ → キー → ポインタ → キー → ポインタ」のように、キーの間にポインタが挟まる形になっています。キーが `n` 個あればポインタは `n+1` 個です。リーフノードは子を持たないのでキーだけが並びます。
-
-![](/images/database-index/b-tree.png)
-
-`*` がポインタで、それぞれのポインタはキーで区切られた範囲の子ノードを指します。例えば、ルートの一番左のポインタは「30 未満のキーを持つノード」を、真ん中のポインタは「30 以上 60 未満」を、一番右は「60 以上」を指します。
-
-`50` を探すときは、ルートで `30 <= 50 < 60` なので真ん中のポインタを辿り、リーフノード `[40 | 50]` に到達して見つかります。比較は2回だけで済みます。
-
-特徴は以下のとおりです。
-
-- 各ノードに複数のキーが入る（ノードのサイズはディスクのページサイズに合わせるのが一般的）
-- 木の高さが低く、`O(log n)` で探索できる
-- 内部ノードにも値（または値へのポインタ）を持つ
-
-### B+tree
-
-B+tree は B-tree の派生で、現代のリレーショナルデータベースで広く使われている構造です。B-tree との違いは以下の2点です。
-
-- 値はリーフノードにのみ格納される（内部ノードはキーだけ）
-- リーフノード同士が連結リストでつながっている
-
-```mermaid
-flowchart TD
-    Root["[ 30 | 60 ]"]
-    I1["[ 10 | 20 ]"]
-    I2["[ 40 | 50 ]"]
-    I3["[ 70 | 80 ]"]
-
-    Root --> I1
-    Root --> I2
-    Root --> I3
-
-    L1["10→ 20→"]
-    L2["30→ 40→ 50→"]
-    L3["60→ 70→ 80"]
-
-    I1 -.値.-> L1
-    I2 -.値.-> L2
-    I3 -.値.-> L3
-
-    L1 --次へ--> L2
-    L2 --次へ--> L3
-```
-
-リーフが連結リストになっていることで、`WHERE id BETWEEN 20 AND 70` のような範囲スキャンが効率的に行えます。一度該当のリーフに到達したら、あとはリーフをたどるだけで済みます。
-
-内部ノードに値を持たない分、1ノードあたりに収まるキーが増え、結果として木の高さが下がりやすいのもメリットです。
+B-tree / B+tree については[別の記事](/posts/btree-index/)にまとめたので、ここでは LSM-tree について書いていきます。
 
 ### LSM-tree
 
@@ -72,13 +17,22 @@ LSM-tree (Log-Structured Merge-tree) は書き込み性能を重視した構造�
 
 全体像は以下のとおりです。
 
-```mermaid
-flowchart LR
-    W["書き込み"] --> WAL["WAL (ディスク)"]
-    W --> MT["Memtable (メモリ)"]
-    MT -- flush --> S0["SSTable Lv0"]
-    S0 -- compaction --> S1["SSTable Lv1"]
-    S1 -- compaction --> S2["SSTable Lv2"]
+```text
+              ┌──→ WAL (ディスク)
+   書き込み ──┤
+              └──→ Memtable (メモリ)
+                        │
+                      flush
+                        v
+                   SSTable Lv0
+                        │
+                   compaction
+                        v
+                   SSTable Lv1
+                        │
+                   compaction
+                        v
+                   SSTable Lv2
 ```
 
 #### Memtable
@@ -128,15 +82,18 @@ LSM-tree では SSTable をその場で書き換えることができないの�
 
 書き込みが続くと SSTable がどんどん増えていきます。読み込みのたびに大量の SSTable をスキャンするのは非効率なので、定期的に複数の SSTable をマージして1つにまとめる処理を行います。これを **compaction** と呼びます。
 
-```mermaid
-flowchart LR
-    A["SSTable A\nfoo=1\nbar=2"]
-    B["SSTable B\nfoo=tombstone\nbaz=3"]
-    C["SSTable C (merged)\nbar=2\nbaz=3"]
-
-    A --> M[compaction]
-    B --> M
-    M --> C
+```text
+   ┌─────────────────┐
+   │ SSTable A       │
+   │  foo=1          │───┐
+   │  bar=2          │   │
+   └─────────────────┘   │     ┌────────────┐     ┌─────────────────┐
+                         ├────→│ compaction │────→│ SSTable C       │
+   ┌─────────────────┐   │     └────────────┘     │  (merged)       │
+   │ SSTable B       │   │                        │  bar=2          │
+   │  foo=tombstone  │───┘                        │  baz=3          │
+   │  baz=3          │                            └─────────────────┘
+   └─────────────────┘
 ```
 
 compaction では以下のことが行われます。
@@ -173,7 +130,7 @@ Bloom filter (ビット配列):
 
 各 SSTable に対応する Bloom filter を持っておくことで、無駄なディスク読み込みを大幅に減らせます。
 
-### B+tree と LSM-tree の比較
+### B+tree との比較
 
 ざっくりまとめると以下のような特性の違いがあります。
 
@@ -189,6 +146,6 @@ Bloom filter (ビット配列):
 
 ### 参考
 
-- [Designing Data-Intensive Applications](https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/)
-- [LSM-based Storage Techniques: A Survey](https://arxiv.org/abs/1812.07527)
-- [RocksDB Wiki](https://github.com/facebook/rocksdb/wiki)
+- [LSM ツリーについて学んだので整理する](https://zenn.dev/ksrnnb/articles/lsm-tree-summary)
+- [Build Your Own Database From Scratch in Go](https://build-your-own.org/database/)
+- [Database Internals](https://www.oreilly.com/library/view/database-internals/9781492040330/)
