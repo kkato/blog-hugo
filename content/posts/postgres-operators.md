@@ -12,15 +12,11 @@ Kubernetes上でPostgreSQLを運用するためのOperatorが複数存在しま�
 | | [PGO](https://github.com/CrunchyData/postgres-operator) | [CloudNativePG](https://github.com/cloudnative-pg/cloudnative-pg) | [Zalando](https://github.com/zalando/postgres-operator) | [StackGres](https://github.com/ongres/stackgres) |
 |---|---|---|---|---|
 | 開発元 | Crunchy Data | EDB / CNCF | Zalando | OnGres |
-| GitHub Stars | 4,400 | 8,000 | 5,100 | 1,400 |
+| GitHub Stars | ~4,400 | ~9,200 | ~5,200 | ~1,400 |
 | ライセンス (Operator) | Apache 2.0 | Apache 2.0 | MIT | AGPL-3.0 |
 | ライセンス (コンテナイメージ) | 独自 (制限あり) | Apache 2.0 | MIT | AGPL-3.0 |
 | Patroni | 使用 | 不使用 (独自実装) | 使用 (Patroni開発元) | 使用 |
 | CNCF | - | Sandbox | - | - |
-
-### Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=CrunchyData/postgres-operator,cloudnative-pg/cloudnative-pg,zalando/postgres-operator,ongres/stackgres&type=Date)](https://star-history.com/#CrunchyData/postgres-operator&cloudnative-pg/cloudnative-pg&zalando/postgres-operator&ongres/stackgres&Date)
 
 ### 各オペレーターの特徴
 

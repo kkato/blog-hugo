@@ -12,17 +12,13 @@ Prometheusはデフォルトでローカルディスクにメトリクスを保�
 | | [Thanos](https://github.com/thanos-io/thanos) | [Cortex](https://github.com/cortexproject/cortex) | [Mimir](https://github.com/grafana/mimir) |
 |---|---|---|---|
 | 開発元 | コミュニティ (元Improbable) | コミュニティ (元Weaveworks) | Grafana Labs |
-| GitHub Stars | ~13,800 | ~5,750 | ~4,400 |
+| GitHub Stars | ~14,200 | ~5,900 | ~5,200 |
 | ライセンス | Apache 2.0 | Apache 2.0 | AGPL-3.0 |
 | CNCF | Incubating | Incubating | - |
 | データ取り込み | Sidecar (pull) / Receiver (push) | remote_write (push) | remote_write (push) |
 | マルチテナント | 限定的 (Receiver経由) | ネイティブ対応 | ネイティブ対応 |
 | ダウンサンプリング | あり (ネイティブ) | なし | なし |
 | オブジェクトストレージ | S3, GCS, Azure, Swift, COS | S3, GCS, Azure, Swift | S3, GCS, Azure, Swift |
-
-### Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=thanos-io/thanos,cortexproject/cortex,grafana/mimir&type=Date)](https://star-history.com/#thanos-io/thanos&cortexproject/cortex&grafana/mimir&Date)
 
 ### 各プロジェクトの特徴
 
